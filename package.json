@@ -1,0 +1,34 @@
+{
+    "name": "devextreme-intl",
+    "description": "Integrates Intl with DevExtreme 16.2",
+    "version": "16.2.1",
+    "author": "Developer Express Inc.",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/DevExpress/DevExtreme-Intl.git"
+    },
+    "dependencies": {
+        "devextreme": "16.2-unstable"
+    },
+    "devDependencies": {
+        "karma": "^0.13.22",
+        "karma-phantomjs-launcher": "^1.0.0",
+        "karma-chrome-launcher": "^1.0.1",
+        "karma-qunit": "^0.1.9",
+        "phantomjs-prebuilt": "^2.1.7",
+        "qunitjs": "^1.23.1",
+        "uglify-js": "^2.6.2",
+        "jquery": "^2.0.0 || ^3.0.0"
+    },
+    "scripts": {
+        "test": "karma start --browsers PhantomJS",
+        "test:chrome": "karma start --browsers Chrome",
+        "build": "uglifyjs src/number.js src/date.js src/message.js -o dist/dx.intl.js -b & uglifyjs src/number.js src/date.js src/message.js -o dist/dx.intl.min.js -c -m"
+    },
+    "keywords": [
+        "intl",
+        "devextreme",
+        "devexpress"
+    ]
+}
