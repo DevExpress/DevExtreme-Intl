@@ -1,6 +1,6 @@
 (function (DX) {
     var getFormatter = function(format) {
-        return new Intl.NumberFormat(DX.config().locale, format).format;
+        return (new Intl.NumberFormat(DX.config().locale, format)).format;
     };
     
     DX.localization.number.resetInjection();
@@ -79,36 +79,6 @@
         },
         _getDecimalSeparator: function(format) {
             return getFormatter(format)(0.1)[1];
-        },
-//        getOpenXmlCurrencyFormat: function() {
-//            var currency = Globalize.cultures[Globalize.cultureSelector].numberFormat.currency,
-//                i,
-//                result,
-//                symbol,
-//                encodeSymbols;
-//
-//            if($.type(currency.pattern) === 'array') {
-//                encodeSymbols = {
-//                    "n": "#,##0{0}",
-//                    "'": "\\'",
-//                    "\\(": "\\(",
-//                    "\\)": "\\)",
-//                    " ": "\\ ",
-//                    "\"": "&quot;",
-//                    "\\$": currency.symbol
-//                };
-//
-//                result = currency.pattern.slice();
-//                for(symbol in encodeSymbols) {
-//                    if(encodeSymbols.hasOwnProperty(symbol)) {
-//                        for(i = 0; i < result.length; i++) {
-//                            result[i] = result[i].replace(new RegExp(symbol, "g"), encodeSymbols[symbol]);
-//                        }
-//                    }
-//                }
-//
-//                return result.length === 2 ? result[1] + "_);" + result[0] : result[0];
-//            }
-//        }
+        }
     });
 }(DevExpress));

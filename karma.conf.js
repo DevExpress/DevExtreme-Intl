@@ -11,8 +11,10 @@ module.exports = function (config) {
             "node_modules/devextreme/dist/js/localization/dx.all.ru.js",
             
             "src/number.js",
+            "src/date.js",
 
-            "tests/number-tests.js"
+            "tests/number-tests.js",
+            "tests/date-tests.js"
         ],
         plugins: [
             "karma-qunit",

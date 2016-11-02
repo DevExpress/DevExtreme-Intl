@@ -1,9 +1,9 @@
 (function (QUnit, DX) {
     var numberLocalization = DX.localization.number;
     
-    [ "de", "en", "ja", "ru" ].forEach((locale) => {
+    [ "de", "en", "ja", "ru" ].forEach(function(locale) {
         var getIntlFormatter = function(format) {
-            return new Intl.NumberFormat(locale, format).format;
+            return (new Intl.NumberFormat(locale, format)).format;
         };
         
         QUnit.module("number - " + locale, {
@@ -104,7 +104,7 @@
                 }
             ];
             
-            assertData.forEach((data) => {
+            assertData.forEach(function(data) {
                 var expected = data.expected;
                 
                 if(data.intlFormat) {
@@ -132,5 +132,7 @@
         QUnit.test("parse by a function", function(assert) {
             assert.equal(numberLocalization.parse("!437", { parser: function(text) { return Number(text.substr(1)); } }), 437);
         });
+        
+        // TODO: implement getOpenXmlCurrencyFormat method
     });
 }(QUnit, DevExpress));
