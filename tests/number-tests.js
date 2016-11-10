@@ -132,7 +132,5 @@
         QUnit.test("parse by a function", function(assert) {
             assert.equal(numberLocalization.parse("!437", { parser: function(text) { return Number(text.substr(1)); } }), 437);
         });
-        
-        // TODO: implement getOpenXmlCurrencyFormat method
     });
 }(QUnit, DevExpress));
