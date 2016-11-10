@@ -22,8 +22,7 @@
         "jquery": "^2.0.0 || ^3.0.0"
     },
     "scripts": {
-        "test": "karma start --browsers PhantomJS",
-        "test:chrome": "karma start --browsers Chrome",
+        "test": "karma start --browsers Chrome",
         "build": "uglifyjs src/number.js src/date.js src/message.js -o dist/dx.intl.js -b & uglifyjs src/number.js src/date.js src/message.js -o dist/dx.intl.min.js -c -m"
     },
     "keywords": [
