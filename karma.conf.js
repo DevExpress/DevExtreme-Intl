@@ -12,9 +12,11 @@ module.exports = function (config) {
             
             "src/number.js",
             "src/date.js",
+            "src/message.js",
 
             "tests/number-tests.js",
-            "tests/date-tests.js"
+            "tests/date-tests.js",
+            "tests/message-tests.js"
         ],
         plugins: [
             "karma-qunit",
