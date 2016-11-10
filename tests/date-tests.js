@@ -14,8 +14,6 @@
                 DX.config({ locale: "en" });
             }
         });
-
-        // TODO: implement or get rid of getPatternByFormat method
         
         QUnit.test("getMonthNames", function(assert) {
             var getIntlMonthNames = function(format) {
@@ -51,7 +49,7 @@
                 getIntlMonthNames("short"),
                 "Array of day names (abbreviated format)");
             assert.deepEqual(dateLocalization.getDayNames("short"),
-                getIntlMonthNames("long").map(function(day) { return day.substr(0, 2); }),
+                getIntlMonthNames("narrow"),
                 "Array of day names (short format)");
             assert.deepEqual(dateLocalization.getDayNames("narrow"),
                 getIntlMonthNames("narrow"),
@@ -61,10 +59,103 @@
         QUnit.test("getTimeSeparator", function(assert) {
             assert.equal(dateLocalization.getTimeSeparator(), ":");
         });
-        
-        // TODO: implement firstDayOfWeekIndex method
-        // TODO: implement format method
-        // TODO: implement parse method
+         
+        QUnit.test("format by DevExtreme formats", function(assert) {
+            var formats = [
+                { format: "day", intlFormat: { day: "numeric" }},
+                { format: "dayofweek", intlFormat: { weekday: "long" }},
+                { format: "hour", intlFormat: { hour: "numeric", hour12: false }},
+                { format: "longdate", intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }},
+                { format: "longdatelongtime", intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }},
+                { format: "longtime", intlFormat: { hour: 'numeric', minute: 'numeric', second: 'numeric' }},
+                { format: "millisecond", expected: "006" },
+                { format: "minute", intlFormat: { minute: "numeric" }},
+                { format: "month", intlFormat: { month: "long" }},
+                { format: "monthandday", intlFormat: { month: "long", day: "numeric" }},
+                { format: "monthandyear", intlFormat: { year: 'numeric', month: "long" }},
+                { format: "shortdate" },
+                { format: "shortdateshorttime", intlFormat: { year: '2-digit', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }},
+                { format: "shorttime", intlFormat: { hour: 'numeric', minute: 'numeric' }},
+                { format: "shortyear", intlFormat: { year: '2-digit' }},
+                { format: "year", intlFormat: { year: 'numeric' }},
+                { format: "datetime-local", expected: "2015-03-02T13:04:05" },
+            ];
+            
+            var quarterData =  [
+                {
+                    date: new Date(2015, 0),
+                    expected: "Q1"
+                },
+                {
+                    date: new Date(2015, 1),
+                    expected: "Q1"
+                },
+                {
+                    date: new Date(2015, 2),
+                    expected: "Q1"
+                },
+                {
+                    date: new Date(2015, 3),
+                    expected: "Q2"
+                },
+                {
+                    date: new Date(2015, 4),
+                    expected: "Q2"
+                },
+                {
+                    date: new Date(2015, 5),
+                    expected: "Q2"
+                },
+                {
+                    date: new Date(2015, 6),
+                    expected: "Q3"
+                },
+                {
+                    date: new Date(2015, 7),
+                    expected: "Q3"
+                },
+                {
+                    date: new Date(2015, 8),
+                    expected: "Q3"
+                },
+                {
+                    date: new Date(2015, 9),
+                    expected: "Q4"
+                },
+                {
+                    date: new Date(2015, 10),
+                    expected: "Q4"
+                },
+                {
+                    date: new Date(2015, 11),
+                    expected: "Q4"
+                }
+            ];
+            var quarterandyearData = {
+                date: new Date(2015, 2, 2, 3, 4, 5, 6),
+                expected: "Q1 2015"
+            };
+            var testDate = new Date(2015, 2, 2, 13, 4, 5, 6);
+            
+            var testFormat = function(format, date, expected) {
+                assert.equal(dateLocalization.format(date, format), expected, date + " in " + format + " format");
+                assert.equal(dateLocalization.format(date, { type: format }), expected, date + " in " + format + " format (object syntax)");
+            };
+            
+            $.each(formats, function(_, data) {
+                var expected = data.expected || getIntlFormatter(data.intlFormat)(testDate);
+                testFormat(data.format, testDate, expected);
+            });
+
+            $.each(quarterData, function(_, data) {
+                testFormat("quarter", data.date, data.expected);
+            });
+            
+            testFormat("quarterandyear", quarterandyearData.date, quarterandyearData.expected);
+
+            assert.equal(dateLocalization.format(new Date(2015, 2, 2, 3, 4, 5, 6)), String(new Date(2015, 2, 2, 3, 4, 5)), "without format");
+            assert.notOk(dateLocalization.format(), "without date");
+        });
         
         QUnit.test("format/parse by a function", function (assert) {
             var format = {
