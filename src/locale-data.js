@@ -1,4 +1,4 @@
-DevExpress.localization.date.inject({ _firstDayOfWeekData: {
+exports.firstDayOfWeekData = {
     "af": 0,
     "am": 0,
     "ar": 6,
@@ -169,4 +169,4 @@ DevExpress.localization.date.inject({ _firstDayOfWeekData: {
     "zh-Hant-HK": 0,
     "zh-Hant-MO": 0,
     "zu": 0
-} });
+};

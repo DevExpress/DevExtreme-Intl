@@ -26,4 +26,4 @@ locales.forEach(function(locale) {
     }
 });
 
-fs.writeFile('./src/locale-data.js', 'DevExpress.localization.date.inject({ _firstDayOfWeekData: ' + JSON.stringify(result, null, "    ") + ' });');
+fs.writeFile('./src/locale-data.js', 'exports.firstDayOfWeekData = ' + JSON.stringify(result, null, "    ") + ';');

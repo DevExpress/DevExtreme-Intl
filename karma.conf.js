@@ -10,10 +10,7 @@ module.exports = function (config) {
             "node_modules/devextreme/dist/js/localization/dx.all.ja.js",
             "node_modules/devextreme/dist/js/localization/dx.all.ru.js",
             
-            "src/number.js",
-            "src/date.js",
-            "src/locale-data.js",
-            "src/message.js",
+            "dist/devextreme-intl.js",
 
             "tests/number-tests.js",
             "tests/date-tests.js",

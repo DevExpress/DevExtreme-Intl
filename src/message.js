@@ -1,12 +1,13 @@
-(function (DX) {  
-    DX.localization.message.resetInjection();
-    DX.localization.message.inject({
-        locale: function(locale) {
-            if(!locale) {
-                return DX.config().locale;
-            }
+var dxConfig = require("devextreme/core/config");
+var messageLocalization = require("devextreme/localization/message"); 
 
-            DX.config({ locale: locale });
+messageLocalization.resetInjection();
+messageLocalization.inject({
+    locale: function(locale) {
+        if(!locale) {
+            return dxConfig().locale;
         }
-    });
-}(DevExpress));
+
+        dxConfig({ locale: locale });
+    }
+});
