@@ -1,4 +1,4 @@
-(function (DX) {
+(function (DX, $) {
     var getIntlFormatter = function(format) {
         return (new Intl.DateTimeFormat(DX.config().locale, format)).format;
     };
@@ -69,6 +69,48 @@
            }
            
            return getIntlFormatter(intlFormats[format] || format)(date);
-       }
+       },
+
+       formatUsesMonthName: function(format) {
+            if($.isPlainObject(format) && !(format.type || format.format)) {
+                return format.month === "long";
+            }
+
+            return this.callBase.apply(this, arguments);
+        },
+
+       formatUsesDayName: function(format) {
+            if($.isPlainObject(format) && !(format.type || format.format)) {
+                return format.weekday === "long";
+            }
+
+            return this.callBase.apply(this, arguments)
+        },
+
+        getFormatParts: function(format) {
+            var utcFormat = $.extend({}, intlFormats[format], { timeZone: 'UTC' });
+            var utcDate = new Date(Date.UTC(2001, 2, 4, 5, 6, 7));
+            var formattedDate = getIntlFormatter(utcFormat)(utcDate);
+
+            var formatParts = [
+                { name: 'year', value: 1 },
+                { name: 'month', value: 3 },
+                { name: 'day', value: 4 },
+                { name: 'hours', value: 5 },
+                { name: 'minutes', value: 6 },
+                { name: 'seconds', value: 7 }
+            ];
+
+            return formatParts
+                .map(function(part) {
+                    return {
+                        name: part.name,
+                        index: formattedDate.indexOf(part.value)
+                    }
+                })
+                .filter(function(part) { return part.index > -1; })
+                .sort(function(a, b) { return a.index - b.index; })
+                .map(function(part) { return part.name; });
+        }
     });
-}(DevExpress));
+}(DevExpress, jQuery));

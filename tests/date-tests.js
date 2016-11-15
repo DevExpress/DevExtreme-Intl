@@ -59,6 +59,33 @@
         QUnit.test("getTimeSeparator", function(assert) {
             assert.equal(dateLocalization.getTimeSeparator(), ":");
         });
+
+        QUnit.test("formatUsesMonthName", function(assert) {
+            assert.equal(dateLocalization.formatUsesMonthName("monthAndDay"), true);
+            assert.equal(dateLocalization.formatUsesMonthName("monthAndYear"), true);
+            assert.equal(dateLocalization.formatUsesMonthName({ month: "long", day: "number", year: "2-digit" }), true);
+            assert.equal(dateLocalization.formatUsesMonthName({ month: "short", day: "number", year: "2-digit" }), false);
+            assert.equal(dateLocalization.formatUsesMonthName({ month: "narrow", day: "number", year: "2-digit" }), false);
+            assert.equal(dateLocalization.formatUsesMonthName({ day: "number", year: "2-digit" }), false);
+            assert.equal(dateLocalization.formatUsesMonthName("month"), false);
+        });
+
+        QUnit.test("formatUsesDayName", function(assert) {
+            assert.equal(dateLocalization.formatUsesDayName("dayofweek"), true);
+            assert.equal(dateLocalization.formatUsesDayName("longdate"), true);
+            assert.equal(dateLocalization.formatUsesDayName("longdatelongtime"), true);
+            assert.equal(dateLocalization.formatUsesDayName({ weekday: "long", day: "number" }), true);
+            assert.equal(dateLocalization.formatUsesDayName({ weekday: "short", day: "number" }), false);
+            assert.equal(dateLocalization.formatUsesDayName({ weekday: "narrow", day: "number" }), false);
+            assert.equal(dateLocalization.formatUsesDayName("day"), false);
+            assert.equal(dateLocalization.formatUsesDayName("shortDate"), false);
+        });
+
+        QUnit.test("getFormatParts", function(assert) {
+            assert.deepEqual(dateLocalization.getFormatParts("shortdate").sort(), ['year', 'month', 'day'].sort());
+            assert.deepEqual(dateLocalization.getFormatParts("shorttime").sort(), ['hours', 'minutes'].sort());
+            assert.deepEqual(dateLocalization.getFormatParts("shortdateshorttime").sort(), ['year', 'month', 'day', 'hours', 'minutes'].sort());
+        });
          
         QUnit.test("format by DevExtreme formats", function(assert) {
             var formats = [
