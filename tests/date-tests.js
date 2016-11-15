@@ -198,5 +198,12 @@
             assert.equal(dateLocalization.format(someDate, format), "It was year 1999.");
             assert.equal(dateLocalization.parse("It was year 2000.", format).getFullYear(), 2000);
         });
+
+        QUnit.test("firstDayOfWeekIndex", function(assert) {
+            var expectedValues = {
+                "de": 1, "en": 0, "ja": 0, "ru": 1
+            };
+            assert.equal(dateLocalization.firstDayOfWeekIndex(), expectedValues[locale]);
+        });
     });
 }(QUnit, DevExpress));

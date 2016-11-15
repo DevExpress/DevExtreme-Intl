@@ -12,6 +12,7 @@ module.exports = function (config) {
             
             "src/number.js",
             "src/date.js",
+            "src/locale-data.js",
             "src/message.js",
 
             "tests/number-tests.js",

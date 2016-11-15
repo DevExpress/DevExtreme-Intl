@@ -18,12 +18,13 @@
         "karma-qunit": "^0.1.9",
         "phantomjs-prebuilt": "^2.1.7",
         "qunitjs": "^1.23.1",
-        "uglify-js": "^2.6.2",
-        "jquery": "^2.0.0 || ^3.0.0"
+        "jquery": "^2.0.0 || ^3.0.0",
+        "cldr-core": "^30.0.2",
+        "cldrjs": "^0.3.1"
     },
     "scripts": {
         "test": "karma start --browsers Chrome",
-        "build": "uglifyjs src/number.js src/date.js src/message.js -o dist/dx.intl.js -b & uglifyjs src/number.js src/date.js src/message.js -o dist/dx.intl.min.js -c -m"
+        "build": "node scripts/locale-data-generator.js"
     },
     "keywords": [
         "intl",

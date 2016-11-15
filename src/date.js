@@ -111,6 +111,12 @@
                 .filter(function(part) { return part.index > -1; })
                 .sort(function(a, b) { return a.index - b.index; })
                 .map(function(part) { return part.name; });
+        },
+
+        firstDayOfWeekIndex: function() {
+            var index = this._firstDayOfWeekData[DX.config().locale];
+
+            return index === undefined ? 1 : index;
         }
     });
 }(DevExpress, jQuery));
