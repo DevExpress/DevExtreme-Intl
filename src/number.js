@@ -1,7 +1,7 @@
 var dxConfig = require("devextreme/core/config");
 var numberLocalization = require("devextreme/localization/number");
 
-    var optionsByCurrency = {},
+    var currencyOptionsCache = {},
         detectCurrencySymbolRegex = /([^\s0]+)?(\s*)0*[.,]*0*(\s*)([^\s0]+)?/,
         getFormatter = function(format) {
             return (new Intl.NumberFormat(dxConfig().locale, format)).format;
