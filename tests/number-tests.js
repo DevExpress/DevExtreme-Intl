@@ -133,6 +133,15 @@
             assert.equal(numberLocalization.parse("!437", { parser: function(text) { return Number(text.substr(1)); } }), 437);
         });
 
+        QUnit.module("currency", {
+            beforeEach: function() {
+                DX.config({ locale: "en" });
+            },
+            afterEach: function() {
+                DX.config({ locale: "en" });
+            }
+        });
+
         QUnit.test("_extractCurrencySymbolInfo", function(assert) {
             assert.deepEqual(numberLocalization._extractCurrencySymbolInfo("00.00 $"), { symbol: "$", position: "after", delimiter: " " });
             assert.deepEqual(numberLocalization._extractCurrencySymbolInfo("$0.0"), { symbol: "$", position: "before", delimiter: "" });
@@ -156,6 +165,33 @@
                 minimumIntegerDigits: 1,
                 useGrouping: false
             }), "0{0} RUB");
+        });
+
+        QUnit.test("getOpenXmlCurrencyFormat", function(assert) {
+            var nonBreakingSpace = "\xa0", 
+                expectedResults = {
+                    RUB: {
+                        de: "#,##0{0} RUB",
+                        en: "RUB#,##0{0}",
+                        ja: "RUB#,##0{0}",
+                        ru: "#,##0{0} ₽"
+                    },
+                    USD: {
+                        de: "#,##0{0} $",
+                        en: "$#,##0{0}",
+                        ja: "$#,##0{0}",
+                        ru: "#,##0{0} $"
+                    }
+                };
+
+            for(var currency in expectedResults) {
+                for(var locale in expectedResults[currency]) {
+                    var expected = expectedResults[currency][locale];
+
+                    DX.config({ locale: locale });
+                    assert.equal(numberLocalization.getOpenXmlCurrencyFormat(currency), expected.replace(" ", nonBreakingSpace));
+                }
+            }
         });
 
     });

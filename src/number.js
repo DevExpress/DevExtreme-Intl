@@ -1,11 +1,14 @@
 var dxConfig = require("devextreme/core/config");
 var numberLocalization = require("devextreme/localization/number");
 
-    var currencyOptionsCache = {},
-        detectCurrencySymbolRegex = /([^\s0]+)?(\s*)0*[.,]*0*(\s*)([^\s0]+)?/,
-        getFormatter = function(format) {
-            return (new Intl.NumberFormat(dxConfig().locale, format)).format;
-        };
+var currencyOptionsCache = {},
+    detectCurrencySymbolRegex = /([^\s0]+)?(\s*)0*[.,]*0*(\s*)([^\s0]+)?/,
+    getFormatter = function(format) {
+        return (new Intl.NumberFormat(dxConfig().locale, format)).format;
+    },
+    getCurrencyFormatter = function(currency) {
+        return (new Intl.NumberFormat(dxConfig().locale, { style: "currency", currency: currency }));
+    };
 
 numberLocalization.resetInjection();
 numberLocalization.inject({
@@ -85,7 +88,7 @@ numberLocalization.inject({
         return getFormatter(format)(0.1)[1];
     },
     _getCurrencySymbolInfo: function(currency) {
-        var formatter = getFormatter(currency);
+        var formatter = getCurrencyFormatter(currency);
         return this._extractCurrencySymbolInfo(formatter.format(0));
     },
     _extractCurrencySymbolInfo: function(currencyValueString) {
@@ -101,16 +104,16 @@ numberLocalization.inject({
         };
     },
     _getCurrencyOptions: function(currency) {
-        var byCurrencyCache = currencyOptionsCache[DX.config().locale];
+        var byCurrencyCache = currencyOptionsCache[dxConfig().locale];
         
         if(!byCurrencyCache) {
-            byCurrencyCache = currencyOptionsCache[DX.config().locale] = {};
+            byCurrencyCache = currencyOptionsCache[dxConfig().locale] = {};
         }
 
         var result = byCurrencyCache[currency];
 
         if(!result) {
-            var formatter = getFormatter("currency", { currency: currency }),
+            var formatter = getCurrencyFormatter(currency),
                 options = formatter.resolvedOptions(),
                 symbolInfo = this._getCurrencySymbolInfo(currency),
 

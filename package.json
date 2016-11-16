@@ -14,17 +14,19 @@
   "devDependencies": {
     "cldr-core": "^30.0.2",
     "cldrjs": "^0.3.1",
+    "intl": "^1.2.5",
     "jquery": "^2.0.0 || ^3.0.0",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-qunit": "^0.1.9",
+    "phantomjs-polyfill-object-assign": "0.0.2",
     "phantomjs-prebuilt": "^2.1.7",
     "qunitjs": "^1.23.1",
     "webpack": "^1.13.3"
   },
   "scripts": {
-    "test": "karma start --browsers Chrome",
+    "test": "karma start --browsers PhantomJS",
     "build": "node scripts/locale-data-generator.js && webpack"
   },
   "keywords": [
