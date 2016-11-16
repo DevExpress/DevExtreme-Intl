@@ -19,13 +19,19 @@
     "karma-chrome-launcher": "^1.0.1",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-qunit": "^0.1.9",
+    "parallelshell": "^2.0.0",
     "phantomjs-prebuilt": "^2.1.7",
     "qunitjs": "^1.23.1",
-    "webpack": "^1.13.3"
+    "webpack": "^1.13.3",
+    "yargs": "^6.4.0"
   },
   "scripts": {
-    "test": "karma start --browsers Chrome",
-    "build": "node scripts/locale-data-generator.js && webpack"
+    "prepare-build": "node scripts/locale-data-generator.js",
+
+    "build": "npm run prepare-build -s && webpack && webpack --min",
+
+    "build-dev": "npm run prepare-build -s && webpack --dev",
+    "test": "parallelshell \"npm run build-dev -s\" \"karma start --browsers Chrome\""
   },
   "keywords": [
     "intl",
