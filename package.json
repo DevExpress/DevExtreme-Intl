@@ -18,10 +18,11 @@
     "jquery": "^2.0.0 || ^3.0.0",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
+    "karma-junit-reporter": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-qunit": "^0.1.9",
-    "phantomjs-polyfill-object-assign": "0.0.2",
     "parallelshell": "^2.0.0",
+    "phantomjs-polyfill-object-assign": "0.0.2",
     "phantomjs-prebuilt": "^2.1.7",
     "qunitjs": "^1.23.1",
     "webpack": "^1.13.3",
@@ -29,11 +30,10 @@
   },
   "scripts": {
     "prepare-build": "node scripts/locale-data-generator.js",
-
     "build": "npm run prepare-build -s && webpack && webpack --min",
-
     "build-dev": "npm run prepare-build -s && webpack --dev",
-    "test": "parallelshell \"npm run build-dev -s\" \"karma start --browsers PhantomJS\""
+    "test": "parallelshell \"npm run build-dev -s\" \"karma start --browsers PhantomJS\"",
+    "test:ci": "npm run build && karma start --browsers PhantomJS --single-run"
   },
   "keywords": [
     "intl",

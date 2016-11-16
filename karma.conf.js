@@ -24,9 +24,17 @@ module.exports = function (config) {
         ],
         plugins: [
             "karma-qunit",
+            "karma-junit-reporter",
             "karma-phantomjs-launcher",
             "karma-chrome-launcher"
         ],
-        reporters: ["dots"]
+        reporters: [
+            "dots",
+            "junit"
+        ],
+        junitReporter: {
+            outputDir: 'shippable/testresults/',
+            outputFile: 'test-results.xml'
+        }
     });
 };
