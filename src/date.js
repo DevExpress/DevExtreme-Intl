@@ -18,6 +18,7 @@ var intlFormats = {
     month: { month: "long" },
     monthandday: { month: "long", day: "numeric" },
     monthandyear: { year: 'numeric', month: "long" },
+    shortdate: {},
     shorttime: { hour: 'numeric', minute: 'numeric' },
     shortyear: { year: '2-digit' },
     year: { year: 'numeric' }
@@ -77,12 +78,17 @@ dateLocalization.inject({
         }
         
         format = format.type || format;
+
+        var intlFormat = getIntlFomat(format);
+        if(intlFormat) {
+            return getIntlFormatter(intlFormat)(date);
+        }
         
-        if(format.formatter || $.isFunction(format) || $.inArray(format.toLowerCase(), ["quarter", "quarterandyear", "millisecond", "datetime-local"]) > -1) {
+        if(format.formatter || $.isFunction(format) || typeof format === "string") {
             return this.callBase.apply(this, arguments);
         }
         
-        return getIntlFormatter(getIntlFomat(format) || format)(date);
+        return getIntlFormatter(format)(date);
     },
 
     formatUsesMonthName: function(format) {

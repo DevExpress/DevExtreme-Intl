@@ -87,7 +87,7 @@
             assert.deepEqual(dateLocalization.getFormatParts("shortdateshorttime").sort(), ['year', 'month', 'day', 'hours', 'minutes'].sort());
         });
          
-        QUnit.test("format by DevExtreme formats", function(assert) {
+        QUnit.test("format", function(assert) {
             var defaultOptions = Intl.DateTimeFormat(locale).resolvedOptions();
             var formats = [
                 { format: "day", intlFormat: { day: "numeric" }},
@@ -167,13 +167,18 @@
             
             var testFormat = function(format, date, expected) {
                 assert.equal(dateLocalization.format(date, format), expected, date + " in " + format + " format");
-                assert.equal(dateLocalization.format(date, format.toUpperCase()), expected, date + " in " + format.toUpperCase() + " format");
                 assert.equal(dateLocalization.format(date, { type: format }), expected, date + " in " + format + " format (object syntax)");
             };
             
             $.each(formats, function(_, data) {
                 var expected = data.expected || getIntlFormatter(data.intlFormat)(testDate);
+                
                 testFormat(data.format, testDate, expected);
+                testFormat(data.format.toUpperCase(), testDate, expected);
+
+                if(data.intlFormat) {
+                    assert.equal(dateLocalization.format(testDate, data.intlFormat), expected, testDate + " in Intl representation of " + data.format + " format");
+                }
             });
 
             $.each(quarterData, function(_, data) {
