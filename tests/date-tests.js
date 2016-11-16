@@ -88,6 +88,7 @@
         });
          
         QUnit.test("format by DevExtreme formats", function(assert) {
+            var defaultOptions = Intl.DateTimeFormat(locale).resolvedOptions();
             var formats = [
                 { format: "day", intlFormat: { day: "numeric" }},
                 { format: "dayofweek", intlFormat: { weekday: "long" }},
@@ -101,7 +102,7 @@
                 { format: "monthandday", intlFormat: { month: "long", day: "numeric" }},
                 { format: "monthandyear", intlFormat: { year: 'numeric', month: "long" }},
                 { format: "shortdate" },
-                { format: "shortdateshorttime", intlFormat: { year: '2-digit', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }},
+                { format: "shortdateshorttime", intlFormat: { year: defaultOptions.year, month: defaultOptions.month, day: defaultOptions.day, hour: 'numeric', minute: 'numeric' }},
                 { format: "shorttime", intlFormat: { hour: 'numeric', minute: 'numeric' }},
                 { format: "shortyear", intlFormat: { year: '2-digit' }},
                 { format: "year", intlFormat: { year: 'numeric' }},
@@ -166,6 +167,7 @@
             
             var testFormat = function(format, date, expected) {
                 assert.equal(dateLocalization.format(date, format), expected, date + " in " + format + " format");
+                assert.equal(dateLocalization.format(date, format.toUpperCase()), expected, date + " in " + format.toUpperCase() + " format");
                 assert.equal(dateLocalization.format(date, { type: format }), expected, date + " in " + format + " format (object syntax)");
             };
             
@@ -182,6 +184,17 @@
 
             assert.equal(dateLocalization.format(new Date(2015, 2, 2, 3, 4, 5, 6)), String(new Date(2015, 2, 2, 3, 4, 5)), "without format");
             assert.notOk(dateLocalization.format(), "without date");
+        });
+
+        QUnit.test("DevExtreme format uses default locale options", function(assert) {
+            var date = new Date();
+
+            var intlFormatted = getIntlFormatter()(date);
+            var dateFormatted = dateLocalization.format(date, "shortdate");
+            var dateTimeFormatted = dateLocalization.format(date, "shortdateshorttime");
+
+            assert.equal(dateFormatted, intlFormatted);
+            assert.ok(dateTimeFormatted.indexOf(intlFormatted) > -1, dateTimeFormatted + " not contain " + intlFormatted);
         });
         
         QUnit.test("format/parse by a function", function (assert) {

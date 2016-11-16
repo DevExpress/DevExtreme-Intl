@@ -18,10 +18,20 @@ var intlFormats = {
     month: { month: "long" },
     monthandday: { month: "long", day: "numeric" },
     monthandyear: { year: 'numeric', month: "long" },
-    shortdateshorttime: { year: '2-digit', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },
     shorttime: { hour: 'numeric', minute: 'numeric' },
     shortyear: { year: '2-digit' },
     year: { year: 'numeric' }
+};
+Object.defineProperty(intlFormats, "shortdateshorttime", {
+    get: function() {
+        var defaultOptions = Intl.DateTimeFormat(dxConfig().locale).resolvedOptions();
+
+        return { year: defaultOptions.year, month: defaultOptions.month, day: defaultOptions.day, hour: 'numeric', minute: 'numeric' }
+    }
+});
+
+var getIntlFomat = function(format) {
+    return typeof format === "string" && intlFormats[format.toLowerCase()];
 };
 
 dateLocalization.resetInjection();
@@ -72,7 +82,7 @@ dateLocalization.inject({
             return this.callBase.apply(this, arguments);
         }
         
-        return getIntlFormatter(intlFormats[format] || format)(date);
+        return getIntlFormatter(getIntlFomat(format) || format)(date);
     },
 
     formatUsesMonthName: function(format) {
