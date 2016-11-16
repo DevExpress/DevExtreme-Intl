@@ -87,7 +87,8 @@
             assert.deepEqual(dateLocalization.getFormatParts("shortdateshorttime").sort(), ['year', 'month', 'day', 'hours', 'minutes'].sort());
         });
          
-        QUnit.test("format by DevExtreme formats", function(assert) {
+        QUnit.test("format", function(assert) {
+            var defaultOptions = Intl.DateTimeFormat(locale).resolvedOptions();
             var formats = [
                 { format: "day", intlFormat: { day: "numeric" }},
                 { format: "dayofweek", intlFormat: { weekday: "long" }},
@@ -101,7 +102,7 @@
                 { format: "monthandday", intlFormat: { month: "long", day: "numeric" }},
                 { format: "monthandyear", intlFormat: { year: 'numeric', month: "long" }},
                 { format: "shortdate" },
-                { format: "shortdateshorttime", intlFormat: { year: '2-digit', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }},
+                { format: "shortdateshorttime", intlFormat: { year: defaultOptions.year, month: defaultOptions.month, day: defaultOptions.day, hour: 'numeric', minute: 'numeric' }},
                 { format: "shorttime", intlFormat: { hour: 'numeric', minute: 'numeric' }},
                 { format: "shortyear", intlFormat: { year: '2-digit' }},
                 { format: "year", intlFormat: { year: 'numeric' }},
@@ -171,7 +172,13 @@
             
             $.each(formats, function(_, data) {
                 var expected = data.expected || getIntlFormatter(data.intlFormat)(testDate);
+                
                 testFormat(data.format, testDate, expected);
+                testFormat(data.format.toUpperCase(), testDate, expected);
+
+                if(data.intlFormat) {
+                    assert.equal(dateLocalization.format(testDate, data.intlFormat), expected, testDate + " in Intl representation of " + data.format + " format");
+                }
             });
 
             $.each(quarterData, function(_, data) {
@@ -182,6 +189,17 @@
 
             assert.equal(dateLocalization.format(new Date(2015, 2, 2, 3, 4, 5, 6)), String(new Date(2015, 2, 2, 3, 4, 5)), "without format");
             assert.notOk(dateLocalization.format(), "without date");
+        });
+
+        QUnit.test("DevExtreme format uses default locale options", function(assert) {
+            var date = new Date();
+
+            var intlFormatted = getIntlFormatter()(date);
+            var dateFormatted = dateLocalization.format(date, "shortdate");
+            var dateTimeFormatted = dateLocalization.format(date, "shortdateshorttime");
+
+            assert.equal(dateFormatted, intlFormatted);
+            assert.ok(dateTimeFormatted.indexOf(intlFormatted) > -1, dateTimeFormatted + " not contain " + intlFormatted);
         });
         
         QUnit.test("format/parse by a function", function (assert) {
