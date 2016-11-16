@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DevExtreme-Intl example using DevExtreme bundle</title>
+
+    <link rel="stylesheet" type="text/css" href="../node_modules/devextreme/dist/css/dx.common.css"/>
+    <link rel="stylesheet" type="text/css" href="../node_modules/devextreme/dist/css/dx.light.css"/>
+
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+
+    <script type="text/javascript" src="../node_modules/devextreme/dist/js/dx.all.debug.js"></script>
+    <script type="text/javascript" src="../node_modules/devextreme/dist/js/localization/dx.all.de.js"></script>
+    <script type="text/javascript" src="../node_modules/devextreme/dist/js/localization/dx.all.ja.js"></script>
+    <script type="text/javascript" src="../node_modules/devextreme/dist/js/localization/dx.all.ru.js"></script>
+
+    <script type="text/javascript" src="../dist/devextreme-intl.dev.js"></script>
+</head>
+
+<body>
+    <script>
+        // Uncomment following line to set locale. Otherwise, 'navigator.language' will be used.
+        // DevExpress.config({ locale: "de" });
+    </script>
+
+
+    <h3>DevExtreme DateBox with default formatting</h3>
+    <div id="datebox-date"></div>
+    <div id="datebox-time"></div>
+    <div id="datebox-datetime"></div>
+
+    <script>
+        $(function() {
+            $("#datebox-date").dxDateBox({
+                type: "date",
+                value: new Date()
+            });
+
+            $("#datebox-time").dxDateBox({
+                type: "time",
+                value: new Date()
+            });
+
+            $("#datebox-datetime").dxDateBox({
+                type: "datetime",
+                value: new Date()
+            });
+        });
+    </script>
+
+
+    <h3>DevExtreme DateBox uses DevExtreme formatting</h3>
+    <div id="datebox-dxcustom"></div>
+
+    <h3>DevExtreme DateBox uses Intl formatting</h3>
+    <div id="datebox-custom"></div>
+
+    <script>
+        $(function() {
+            $("#datebox-dxcustom").dxDateBox({
+                displayFormat: "longDate",
+                value: new Date()
+            });
+
+            $("#datebox-custom").dxDateBox({
+                displayFormat: { year: 'numeric', month: 'long' },
+                maxZoomLevel: 'year',
+                value: new Date()
+            });
+        });
+    </script>
+
+
+    <h3>DevExtreme DateBox with rollers</h3>
+    <div id="datebox-rollers"></div>
+
+    <script>
+        $(function() {
+            $("#datebox-rollers").dxDateBox({
+                pickerType: "rollers",
+                value: new Date()
+            });
+        });
+    </script>
+
+
+    <h3>DevExtreme DataGrid with currency and date formatting</h3>
+    <div id="datagrid"></div>
+
+    <script>
+        $(function() {
+            $("#datagrid").dxDataGrid({
+                dataSource: [{
+                    "ID": 1,
+                    "OrderDate": "2014/04/10",
+                    "SaleAmount": 11800,
+                }, {
+                    "ID": 4,
+                    "OrderDate": "2014/01/12",
+                    "SaleAmount": 16050,
+                }, {
+                    "ID": 5,
+                    "OrderDate": "2014/01/22",
+                    "SaleAmount": 14750,
+                }],
+                columns: [{
+                    dataField: "OrderDate",
+                    alignment: "right",
+                    dataType: "date",
+                    format: "longDate"
+                }, {
+                    dataField: "SaleAmount",
+                    alignment: "right",
+                    format: { type: "currency", currency: "EUR" }
+                }],
+                editing: {
+                    mode: "row",
+                    allowUpdating: true,
+                    allowDeleting: true,
+                    allowAdding: true
+                } 
+            });
+        });
+    </script>
+</body>
+</html>
