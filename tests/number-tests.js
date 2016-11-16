@@ -142,31 +142,6 @@
             }
         });
 
-        QUnit.test("_extractCurrencySymbolInfo", function(assert) {
-            assert.deepEqual(numberLocalization._extractCurrencySymbolInfo("00.00 $"), { symbol: "$", position: "after", delimiter: " " });
-            assert.deepEqual(numberLocalization._extractCurrencySymbolInfo("$0.0"), { symbol: "$", position: "before", delimiter: "" });
-            assert.deepEqual(numberLocalization._extractCurrencySymbolInfo("0.00 RUB"), { symbol: "RUB", position: "after", delimiter: " " });
-            assert.deepEqual(numberLocalization._extractCurrencySymbolInfo("RUB0"), { symbol: "RUB", position: "before", delimiter: "" });
-            assert.deepEqual(numberLocalization._extractCurrencySymbolInfo("0"), { symbol: "", position: "after", delimiter: "" });
-        });
-
-        QUnit.test("_createOpenXmlCurrencyFormat", function(assert) {
-            assert.equal(numberLocalization._createOpenXmlCurrencyFormat({
-                currencySymbol: "$",
-                currencyPosition: "before",
-                currencyDelimiter: "",
-                minimumIntegerDigits: 2,
-                useGrouping: true
-            }), "$#,#00{0}");
-            assert.equal(numberLocalization._createOpenXmlCurrencyFormat({
-                currencySymbol: "RUB",
-                currencyPosition: "after",
-                currencyDelimiter: " ",
-                minimumIntegerDigits: 1,
-                useGrouping: false
-            }), "0{0} RUB");
-        });
-
         QUnit.test("getOpenXmlCurrencyFormat", function(assert) {
             var nonBreakingSpace = "\xa0", 
                 expectedResults = {
