@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../node_modules/devextreme/dist/css/dx.light.css"/>
 
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../node_modules/jszip/dist/jszip.js"></script>
 
     <script type="text/javascript" src="../node_modules/devextreme/dist/js/dx.all.debug.js"></script>
     <script type="text/javascript" src="../node_modules/devextreme/dist/js/localization/dx.all.de.js"></script>
@@ -119,7 +120,10 @@
                     allowUpdating: true,
                     allowDeleting: true,
                     allowAdding: true
-                } 
+                },
+                "export": {
+                    enabled: true
+                }
             });
         });
     </script>
