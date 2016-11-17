@@ -19,6 +19,7 @@
   "devDependencies": {
     "cldr-core": "^30.0.2",
     "cldrjs": "^0.3.1",
+    "eslint": "^3.10.2",
     "intl": "^1.2.5",
     "jquery": "^2.0.0 || ^3.0.0",
     "karma": "^0.13.22",
