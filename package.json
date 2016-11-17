@@ -22,7 +22,6 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-qunit": "^0.1.9",
     "parallelshell": "^2.0.0",
-    "phantomjs-polyfill-object-assign": "0.0.2",
     "phantomjs-prebuilt": "^2.1.7",
     "qunitjs": "^1.23.1",
     "webpack": "^1.13.3",
