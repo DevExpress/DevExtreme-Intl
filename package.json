@@ -18,6 +18,7 @@
     "jquery": "^2.0.0 || ^3.0.0",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
+    "karma-junit-reporter": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-qunit": "^0.1.9",
     "parallelshell": "^2.0.0",
