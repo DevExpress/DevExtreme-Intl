@@ -1,7 +1,7 @@
 var $ = require("jquery");
 var dxConfig = require("devextreme/core/config");
 var dateLocalization = require("devextreme/localization/date");
-var firstDayOfWeekData = require("./locale-data").firstDayOfWeekData;
+var firstDayOfWeekData = require("../locale-data/first-day-of-week-data");
 
 var getIntlFormatter = function(format) {
     return (new Intl.DateTimeFormat(dxConfig().locale, format)).format;

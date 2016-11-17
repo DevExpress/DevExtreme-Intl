@@ -26,4 +26,4 @@ locales.forEach(function(locale) {
     }
 });
 
-fs.writeFile('./src/locale-data.js', 'exports.firstDayOfWeekData = ' + JSON.stringify(result, null, "    ") + ';');
+fs.writeFile('./locale-data/first-day-of-week-data.js', 'module.exports = ' + JSON.stringify(result, null, "    ") + ';');
