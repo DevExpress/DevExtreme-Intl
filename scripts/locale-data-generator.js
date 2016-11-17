@@ -1,6 +1,7 @@
 var Cldr = require("cldrjs");
 var locales = require("cldr-core/availableLocales.json").availableLocales.full;
 var fs = require("fs");
+var path = require("path");
 
 var DAY_INDEXES = {
     sun: 0,
@@ -26,4 +27,8 @@ locales.forEach(function(locale) {
     }
 });
 
-fs.writeFile('./locale-data/first-day-of-week-data.js', 'module.exports = ' + JSON.stringify(result, null, "    ") + ';');
+var LOCALE_DATA_FOLDER = "locale-data";
+try {
+    fs.mkdirSync(LOCALE_DATA_FOLDER);
+} catch(e) {}
+fs.writeFile(path.join(LOCALE_DATA_FOLDER, "first-day-of-week-data.js"), "module.exports = " + JSON.stringify(result, null, "    ") + ";");
