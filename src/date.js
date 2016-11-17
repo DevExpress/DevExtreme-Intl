@@ -1,4 +1,4 @@
-var $ = require('jquery');
+var objectAssign = require('object-assign');
 var dxConfig = require('devextreme/core/config');
 var dateLocalization = require('devextreme/localization/date');
 var firstDayOfWeekData = require('../locale-data/first-day-of-week-data');
@@ -92,7 +92,7 @@ dateLocalization.inject({
             return getIntlFormatter(intlFormat)(date);
         }
 
-        if(format.formatter || $.isFunction(format) || typeof format === 'string') {
+        if(format.formatter || typeof format === 'function' || typeof format === 'string') {
             return this.callBase.apply(this, arguments);
         }
 
@@ -100,7 +100,8 @@ dateLocalization.inject({
     },
 
     parse: function(dateString, format) {
-        if(typeof format === 'string' && $.inArray(format.toLowerCase(), ['shortdate', 'shorttime', 'shortdateshorttime', 'longtime']) > -1) {
+        var SIMPLE_FORMATS = ['shortdate', 'shorttime', 'shortdateshorttime', 'longtime'];
+        if(typeof format === 'string' && SIMPLE_FORMATS.indexOf(format.toLowerCase()) > -1) {
             return this._parseDateBySimpleFormat(dateString, format.toLowerCase());
         }
 
@@ -159,7 +160,7 @@ dateLocalization.inject({
     },
 
     formatUsesMonthName: function(format) {
-        if($.isPlainObject(format) && !(format.type || format.format)) {
+        if(typeof format === 'object' && !(format.type || format.format)) {
             return format.month === 'long';
         }
 
@@ -167,7 +168,7 @@ dateLocalization.inject({
     },
 
     formatUsesDayName: function(format) {
-        if($.isPlainObject(format) && !(format.type || format.format)) {
+        if(typeof format === 'object' && !(format.type || format.format)) {
             return format.weekday === 'long';
         }
 
@@ -175,7 +176,7 @@ dateLocalization.inject({
     },
 
     getFormatParts: function(format) {
-        var utcFormat = $.extend({}, intlFormats[format.toLowerCase()], { timeZone: 'UTC' });
+        var utcFormat = objectAssign({}, intlFormats[format.toLowerCase()], { timeZone: 'UTC' });
         var utcDate = new Date(Date.UTC(2001, 2, 4, 5, 6, 7));
         var formattedDate = getIntlFormatter(utcFormat)(utcDate);
 

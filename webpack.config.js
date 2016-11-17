@@ -31,7 +31,6 @@ module.exports = {
         libraryTarget: 'umd'
     },
     externals: {
-        'jquery': { root: 'jQuery', amd: 'jquery', commonjs: 'jquery' },
         'devextreme/core/config': { root: [ 'DevExpress', 'config' ], amd: 'devextreme/core/config', commonjs: 'devextreme/core/config' },
         'devextreme/localization/number': { root: [ 'DevExpress', 'localization', 'number' ], amd: 'devextreme/localization/number', commonjs: 'devextreme/localization/number' },
         'devextreme/localization/date': { root: [ 'DevExpress', 'localization', 'date' ], amd: 'devextreme/localization/date', commonjs: 'devextreme/localization/date' },
