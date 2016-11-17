@@ -107,7 +107,7 @@ dateLocalization.inject({
         return this.callBase(dateString, format);
     },
 
-    _parseDateBySimpleFormat(dateString, format) {
+    _parseDateBySimpleFormat: function(dateString, format) {
         var formatParts = this.getFormatParts(format);
         var dateParts = dateString
             .split(/\D+/)
