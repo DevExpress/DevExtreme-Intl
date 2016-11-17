@@ -1,7 +1,11 @@
 module.exports = function (config) {
     config.set({
+        browsers: ['PhantomJS', 'Chrome'],
         frameworks: ["qunit"],
         files: [
+            "node_modules/intl/dist/intl.js",
+            "node_modules/intl/locale-data/complete.js",
+
             "node_modules/jquery/dist/jquery.min.js",
             
             "node_modules/devextreme/dist/js/dx.all.debug.js",
@@ -18,6 +22,7 @@ module.exports = function (config) {
         ],
         plugins: [
             "karma-qunit",
+            "karma-phantomjs-launcher",
             "karma-chrome-launcher"
         ],
         reporters: ["dots"]

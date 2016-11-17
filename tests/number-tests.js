@@ -132,5 +132,42 @@
         QUnit.test("parse by a function", function(assert) {
             assert.equal(numberLocalization.parse("!437", { parser: function(text) { return Number(text.substr(1)); } }), 437);
         });
+
+        QUnit.module("currency", {
+            beforeEach: function() {
+                DX.config({ locale: "en" });
+            },
+            afterEach: function() {
+                DX.config({ locale: "en" });
+            }
+        });
+
+        QUnit.test("getOpenXmlCurrencyFormat", function(assert) {
+            var nonBreakingSpace = "\xa0", 
+                expectedResults = {
+                    RUB: {
+                        de: "#,##0{0} RUB",
+                        en: "RUB#,##0{0}",
+                        ja: "RUB#,##0{0}",
+                        ru: "#,##0{0} ₽"
+                    },
+                    USD: {
+                        de: "#,##0{0} $",
+                        en: "$#,##0{0}",
+                        ja: "$#,##0{0}",
+                        ru: "#,##0{0} $"
+                    }
+                };
+
+            for(var currency in expectedResults) {
+                for(var locale in expectedResults[currency]) {
+                    var expected = expectedResults[currency][locale];
+
+                    DX.config({ locale: locale });
+                    assert.equal(numberLocalization.getOpenXmlCurrencyFormat(currency), expected.replace(" ", nonBreakingSpace));
+                }
+            }
+        });
+
     });
 }(QUnit, DevExpress));

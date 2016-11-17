@@ -1,9 +1,15 @@
+var $ = require("jquery");
 var dxConfig = require("devextreme/core/config");
 var numberLocalization = require("devextreme/localization/number");
 
-var getFormatter = function(format) {
-    return (new Intl.NumberFormat(dxConfig().locale, format)).format;
-};
+var currencyOptionsCache = {},
+    detectCurrencySymbolRegex = /([^\s0]+)?(\s*)0*[.,]*0*(\s*)([^\s0]+)?/,
+    getFormatter = function(format) {
+        return (new Intl.NumberFormat(dxConfig().locale, format)).format;
+    },
+    getCurrencyFormatter = function(currency) {
+        return (new Intl.NumberFormat(dxConfig().locale, { style: "currency", currency: currency }));
+    };
 
 numberLocalization.resetInjection();
 numberLocalization.inject({
@@ -81,5 +87,71 @@ numberLocalization.inject({
     },
     _getDecimalSeparator: function(format) {
         return getFormatter(format)(0.1)[1];
+    },
+    _getCurrencySymbolInfo: function(currency) {
+        var formatter = getCurrencyFormatter(currency);
+        return this._extractCurrencySymbolInfo(formatter.format(0));
+    },
+    _extractCurrencySymbolInfo: function(currencyValueString) {
+        var match = detectCurrencySymbolRegex.exec(currencyValueString) || [],
+            position = match[1] ? "before" : "after",
+            symbol = match[1] || match[4] || "",
+            delimiter = match[2] || match[3] || "";
+
+        return {
+            position: position,
+            symbol: symbol,
+            delimiter: delimiter
+        };
+    },
+    _getCurrencyOptions: function(currency) {
+        var byCurrencyCache = currencyOptionsCache[dxConfig().locale];
+        
+        if(!byCurrencyCache) {
+            byCurrencyCache = currencyOptionsCache[dxConfig().locale] = {};
+        }
+
+        var result = byCurrencyCache[currency];
+
+        if(!result) {
+            var formatter = getCurrencyFormatter(currency),
+                options = formatter.resolvedOptions(),
+                symbolInfo = this._getCurrencySymbolInfo(currency),
+
+            result = byCurrencyCache[currency] = $.extend(options, {
+                currencySymbol: symbolInfo.symbol,
+                currencyPosition: symbolInfo.position,
+                currencyDelimiter: symbolInfo.delimiter
+            });
+        }
+
+        return result;
+    },
+    _repeatCharacter: function(character, times) {
+        return Array(times + 1).join(character);
+    },
+    _createOpenXmlCurrencyFormat: function(options) {
+        var result = this._repeatCharacter("0", options.minimumIntegerDigits);
+
+        result += "{0}"; //precision is specified outside
+
+        if(options.useGrouping) {
+            result = "#," + this._repeatCharacter("#", 3 - options.minimumIntegerDigits) + result;
+        }
+
+        if(options.currencySymbol) {
+            if(options.currencyPosition === "before") {
+                result = options.currencySymbol + options.currencyDelimiter + result;
+            }
+            else {
+                result += options.currencyDelimiter + options.currencySymbol;
+            }
+        }
+
+        return result;
+    },
+    getOpenXmlCurrencyFormat: function(currency) {
+        var options = this._getCurrencyOptions(currency);
+        return this._createOpenXmlCurrencyFormat(options);
     }
 });
