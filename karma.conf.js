@@ -14,7 +14,7 @@ module.exports = function (config) {
             "node_modules/devextreme/dist/js/localization/dx.all.ja.js",
             "node_modules/devextreme/dist/js/localization/dx.all.ru.js",
             
-            "dist/devextreme-intl.dev.js",
+            "dist/" + (config.useProdBundle ? "devextreme-intl.js" : "devextreme-intl.dev.js"),
 
             "tests/number-tests.js",
             "tests/date-tests.js",
