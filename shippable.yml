@@ -18,4 +18,4 @@ build:
 
   ci:
     - shippable_retry npm install --unsafe-perm
-    - npm run test:ci
+    - npm run test
