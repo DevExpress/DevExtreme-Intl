@@ -29,11 +29,11 @@
   },
   "scripts": {
     "prepare-build": "node scripts/locale-data-generator.js",
-
     "build": "npm run prepare-build -s && webpack && webpack --min",
-
     "build-dev": "npm run prepare-build -s && webpack --dev",
-    "test": "parallelshell \"npm run build-dev -s\" \"karma start --browsers PhantomJS\""
+    "test-dev": "parallelshell \"npm run build-dev -s\" \"karma start --browsers Chrome\"",
+    "test-dev-phantom": "parallelshell \"npm run build-dev -s\" \"karma start --browsers PhantomJS\"",
+    "test": "npm run build && karma start --browsers PhantomJS --single-run"
   },
   "keywords": [
     "intl",
