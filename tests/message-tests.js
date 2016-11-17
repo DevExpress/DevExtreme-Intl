@@ -1,6 +1,8 @@
 (function (QUnit, DX) {
     var messageLocalization = DX.localization.message;
 
+    messageLocalization.load({ en: { onlyDefaultLocaleKey: "Base value" } });
+
     [ "de", "en", "ja", "ru" ].forEach(function(locale) {
         QUnit.module("message - " + locale, {
             beforeEach: function() {
@@ -21,7 +23,8 @@
         });
         
         QUnit.test("format", function(assert) {
-            assert.equal(messageLocalization.format("addedKey"), locale + "TestValue", "formatting message loaded by messageLocalization.load");
+            assert.equal(messageLocalization.format("addedKey"), locale + "TestValue", "message formatted correctly");
+            assert.equal(messageLocalization.format("onlyDefaultLocaleKey"), "Base value" , "message formatted by default locale");
         });
         
         QUnit.test("getFormatter", function(assert) {
