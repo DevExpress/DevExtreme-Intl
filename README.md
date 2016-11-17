@@ -1,3 +1,5 @@
+[![Run Status](https://api.shippable.com/projects/5819ee767d9db80f006078c2/badge?branch=master)](https://app.shippable.com/projects/5819ee767d9db80f006078c2)
+
 # DevExtreme integration with Intl
 
 Integrates [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) with [DevExtreme 16.2](http://js.devexpress.com/)
