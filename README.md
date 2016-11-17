@@ -24,7 +24,7 @@ or in the Google Chrome browser:
     
 ### Build
 
-Build the distribution files `dx.intl.js` and `dx.intl.min.js` into the `/dist` folder.
+Build the distribution files `devextreme-intl.js` and `devextreme-intl.min.js` into the `/dist` folder.
 
     npm run build
 
