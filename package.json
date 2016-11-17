@@ -39,7 +39,8 @@
     "build-dev": "npm run prepare-build -s && webpack --dev",
     "test-dev": "parallelshell \"npm run build-dev -s\" \"karma start --browsers Chrome\"",
     "test-dev-phantom": "parallelshell \"npm run build-dev -s\" \"karma start --browsers PhantomJS\"",
-    "test": "npm run build && karma start --browsers PhantomJS --single-run --use-prod-bundle=true",
+    "lint": "eslint src scripts tests webpack.config.js karma.conf.js",
+    "test": "npm run build -s && npm run lint -s && karma start --browsers PhantomJS --single-run --use-prod-bundle=true",
     "pack": "npm run test -s && npm pack"
   },
   "keywords": [

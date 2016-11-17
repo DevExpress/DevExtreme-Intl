@@ -1,3 +1,3 @@
-require("./number");
-require("./date");
-require("./message");
+require('./number');
+require('./date');
+require('./message');

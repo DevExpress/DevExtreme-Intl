@@ -1,34 +1,34 @@
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
         browsers: ['PhantomJS', 'Chrome'],
-        frameworks: ["qunit"],
+        frameworks: ['qunit'],
         files: [
-            "node_modules/intl/dist/Intl.min.js",
-            "node_modules/intl/locale-data/complete.js",
+            'node_modules/intl/dist/Intl.min.js',
+            'node_modules/intl/locale-data/complete.js',
 
-            "node_modules/jquery/dist/jquery.min.js",
-            
-            "node_modules/devextreme/dist/js/dx.all.debug.js",
-            
-            "node_modules/devextreme/dist/js/localization/dx.all.de.js",
-            "node_modules/devextreme/dist/js/localization/dx.all.ja.js",
-            "node_modules/devextreme/dist/js/localization/dx.all.ru.js",
-            
-            "dist/" + (config.useProdBundle ? "devextreme-intl.js" : "devextreme-intl.dev.js"),
+            'node_modules/jquery/dist/jquery.min.js',
 
-            "tests/number-tests.js",
-            "tests/date-tests.js",
-            "tests/message-tests.js"
+            'node_modules/devextreme/dist/js/dx.all.debug.js',
+
+            'node_modules/devextreme/dist/js/localization/dx.all.de.js',
+            'node_modules/devextreme/dist/js/localization/dx.all.ja.js',
+            'node_modules/devextreme/dist/js/localization/dx.all.ru.js',
+
+            'dist/' + (config.useProdBundle ? 'devextreme-intl.js' : 'devextreme-intl.dev.js'),
+
+            'tests/number-tests.js',
+            'tests/date-tests.js',
+            'tests/message-tests.js'
         ],
         plugins: [
-            "karma-qunit",
-            "karma-junit-reporter",
-            "karma-phantomjs-launcher",
-            "karma-chrome-launcher"
+            'karma-qunit',
+            'karma-junit-reporter',
+            'karma-phantomjs-launcher',
+            'karma-chrome-launcher'
         ],
         reporters: [
-            "dots",
-            "junit"
+            'dots',
+            'junit'
         ],
         junitReporter: {
             outputDir: 'shippable/testresults/',
