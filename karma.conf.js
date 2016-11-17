@@ -3,7 +3,7 @@ module.exports = function (config) {
         browsers: ['PhantomJS', 'Chrome'],
         frameworks: ["qunit"],
         files: [
-            "node_modules/intl/dist/intl.js",
+            "node_modules/intl/dist/Intl.min.js",
             "node_modules/intl/locale-data/complete.js",
 
             "node_modules/jquery/dist/jquery.min.js",
@@ -14,7 +14,7 @@ module.exports = function (config) {
             "node_modules/devextreme/dist/js/localization/dx.all.ja.js",
             "node_modules/devextreme/dist/js/localization/dx.all.ru.js",
             
-            "dist/devextreme-intl.dev.js",
+            "dist/" + (config.useProdBundle ? "devextreme-intl.js" : "devextreme-intl.dev.js"),
 
             "tests/number-tests.js",
             "tests/date-tests.js",
@@ -22,9 +22,17 @@ module.exports = function (config) {
         ],
         plugins: [
             "karma-qunit",
+            "karma-junit-reporter",
             "karma-phantomjs-launcher",
             "karma-chrome-launcher"
         ],
-        reporters: ["dots"]
+        reporters: [
+            "dots",
+            "junit"
+        ],
+        junitReporter: {
+            outputDir: 'shippable/testresults/',
+            outputFile: 'test-results.xml'
+        }
     });
 };
