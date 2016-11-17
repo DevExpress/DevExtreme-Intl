@@ -3,7 +3,7 @@ module.exports = function (config) {
         browsers: ['PhantomJS', 'Chrome'],
         frameworks: ["qunit"],
         files: [
-            "node_modules/intl/dist/intl.js",
+            "node_modules/intl/dist/Intl.min.js",
             "node_modules/intl/locale-data/complete.js",
 
             "node_modules/jquery/dist/jquery.min.js",
