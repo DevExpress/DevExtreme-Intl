@@ -1,3 +1,4 @@
+var $ = require("jquery");
 var dxConfig = require("devextreme/core/config");
 var numberLocalization = require("devextreme/localization/number");
 
@@ -117,7 +118,7 @@ numberLocalization.inject({
                 options = formatter.resolvedOptions(),
                 symbolInfo = this._getCurrencySymbolInfo(currency),
 
-            result = byCurrencyCache[currency] = Object.assign(options, {
+            result = byCurrencyCache[currency] = $.extend(options, {
                 currencySymbol: symbolInfo.symbol,
                 currencyPosition: symbolInfo.position,
                 currencyDelimiter: symbolInfo.delimiter
