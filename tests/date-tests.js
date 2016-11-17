@@ -191,6 +191,43 @@
             assert.notOk(dateLocalization.format(), "without date");
         });
 
+        QUnit.test("parse", function(assert) {
+            var currentDate = new Date();
+            [
+                { format: 'shortDate', date: new Date(2016, 10, 17) },
+                { format: 'shortDate', date: new Date(2016, 11, 31) },
+                { format: 'shortDate', date: new Date(2016, 0, 1) },
+
+                { format: 'shortTime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 4, 22) },
+                { format: 'shortTime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 18, 56) },
+                { format: 'shortTime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 00) },
+                { format: 'shortTime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59) },
+
+                { format: 'shortDateshortTime', date: new Date(2016, 11, 31, 4, 44) },
+                { format: 'shortDateshortTime', date: new Date(2016, 11, 31, 12, 32) },
+                { format: 'shortDateshortTime', date: new Date(2016, 0, 1, 0, 16) },
+                { format: 'shortDateshortTime', date: new Date(2016, 0, 1, 12, 48) },
+
+                { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 4, 22, 15) },
+                { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 18, 56, 56) },
+                { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 00, 0) },
+                { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59, 59) }
+            ].forEach(function(config) {
+                var format = config.format;
+                var date = config.date;
+                    
+                var formattedDate = dateLocalization.format(date, format);
+                var parsedDate = dateLocalization.parse(formattedDate, format);
+
+                assert.equal(parsedDate && parsedDate.toString(), date.toString(), "failed to parse " + formattedDate + " by '" + format + "'");
+                
+                formattedDate = formattedDate.replace(/(\D)0+(\d)/g, "$1$2");
+                
+                parsedDate = dateLocalization.parse(formattedDate, format);
+                assert.equal(parsedDate && parsedDate.toString(), date.toString(), "failed to parse " + formattedDate + " by '" + format + "' without leading zeroes");
+            });
+        });
+
         QUnit.test("DevExtreme format uses default locale options", function(assert) {
             var date = new Date();
 
