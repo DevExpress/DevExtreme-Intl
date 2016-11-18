@@ -35,7 +35,7 @@
 
         // Uncomment following lines to set locale. Otherwise, 'navigator.language' will be used.
         // System.import('devextreme/core/config').then(function(config) {
-        //     config({ locale: "ru" });
+        //     config({ locale: "de" });
         // });
     </script>
 
@@ -138,6 +138,69 @@
                 "export": {
                     enabled: true
                 }
+            });
+        });
+    </script>
+
+
+    <h3>DevExtreme Scheduler</h3>
+    <div id="scheduler"></div>
+
+    <script>
+        System.import('devextreme/ui/scheduler').then(function() {
+            $("#scheduler").dxScheduler({
+                dataSource: [{
+                    text: "Book Flights to San Fran for Sales Trip",
+                    ownerId: [2],
+                    startDate: new Date(2015, 4, 25, 12, 0),
+                    endDate: new Date(2015, 4, 25, 13, 0)
+                }, {
+                    text: "Install New Database",
+                    ownerId: [2],
+                    startDate: new Date(2015, 4, 27, 9, 45),
+                    endDate: new Date(2015, 4, 27, 11, 15)
+                }, {
+                    text: "Launch New Website",
+                    ownerId: [2],
+                    startDate: new Date(2015, 4, 29, 12, 20),
+                    endDate: new Date(2015, 4, 29, 14, 0)
+                }, {
+                    text: "Stand-up meeting",
+                    ownerId: [1, 2, 3, 4],
+                    startDate: new Date(2015, 4, 25, 9, 0),
+                    endDate: new Date(2015, 4, 25, 9, 15),
+                    recurrenceRule: "FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;UNTIL=20150530"
+                }],
+                views: ["agenda", "month", "week", "workWeek", "day"],
+                currentView: "workWeek",
+                currentDate: new Date(2015, 4, 25),
+                useDropDownViewSwitcher: false,
+                startDayHour: 8,
+                endDayHour: 19,
+                resources: [{
+                    field: "ownerId",
+                    allowMultiple: true,
+                    dataSource: [{
+                        text: "Samantha Bright",
+                        id: 1,
+                        color: "#cb6bb2"
+                    }, {
+                        text: "John Heart",
+                        id: 2,
+                        color: "#56ca85"
+                    }, {
+                        text: "Todd Hoffman",
+                        id: 3,
+                        color: "#1e90ff"
+                    }, {
+                        text: "Sandra Johnson",
+                        id: 4,
+                        color: "#ff9747"
+                    }],
+                    label: "Owner"
+                }],
+                width: "100%",
+                height: 600
             });
         });
     </script>
