@@ -6,21 +6,13 @@ module.exports = function(config) {
             'node_modules/intl/dist/Intl.min.js',
             'node_modules/intl/locale-data/complete.js',
 
-            'node_modules/jquery/dist/jquery.min.js',
-
-            'node_modules/devextreme/dist/js/dx.all.debug.js',
-
-            'node_modules/devextreme/dist/js/localization/dx.all.de.js',
-            'node_modules/devextreme/dist/js/localization/dx.all.ja.js',
-            'node_modules/devextreme/dist/js/localization/dx.all.ru.js',
-
-            'dist/' + (config.useProdBundle ? 'devextreme-intl.js' : 'devextreme-intl.dev.js'),
-
-            'tests/number-tests.js',
-            'tests/date-tests.js',
-            'tests/message-tests.js'
+            { pattern: 'tests/index.js', watched: false }
         ],
+        preprocessors: {
+            'tests/index.js': ['webpack']
+        },
         plugins: [
+            'karma-webpack',
             'karma-qunit',
             'karma-junit-reporter',
             'karma-phantomjs-launcher',
@@ -33,6 +25,9 @@ module.exports = function(config) {
         junitReporter: {
             outputDir: 'shippable/testresults/',
             outputFile: 'test-results.xml'
+        },
+        webpackMiddleware: {
+            stats: 'errors-only'
         }
     });
 };

@@ -3,3 +3,4 @@ npm-debug.log
 dist/
 shippable/
 locale-data/
+devextreme-intl-*.tgz

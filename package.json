@@ -27,6 +27,7 @@
     "karma-junit-reporter": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-qunit": "^0.1.9",
+    "karma-webpack": "^1.8.0",
     "object-assign": "^4.1.0",
     "parallelshell": "^2.0.0",
     "phantomjs-prebuilt": "^2.1.7",
@@ -38,11 +39,9 @@
   "scripts": {
     "prepare-build": "node scripts/locale-data-generator.js",
     "build": "npm run prepare-build -s && webpack && webpack --min",
-    "build-dev": "npm run prepare-build -s && webpack --dev",
-    "test-dev": "parallelshell \"npm run build-dev -s\" \"karma start --browsers Chrome\"",
-    "test-dev-phantom": "parallelshell \"npm run build-dev -s\" \"karma start --browsers PhantomJS\"",
+    "test-dev": "npm run prepare-build -s && parallelshell \"webpack --dev\" \"karma start --browsers PhantomJS\"",
     "lint": "eslint src scripts tests webpack.config.js karma.conf.js",
-    "test": "npm run build -s && npm run lint -s && karma start --browsers PhantomJS --single-run --use-prod-bundle=true",
+    "test": "npm run build -s && npm run lint -s && karma start --browsers PhantomJS --single-run",
     "pack": "npm run test -s && npm pack"
   },
   "keywords": [

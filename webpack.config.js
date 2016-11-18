@@ -23,12 +23,14 @@ if(argv.min) {
 }
 
 module.exports = {
-    context: path.resolve(__dirname + '/src'),
-    entry: './index',
+    context: path.resolve(__dirname),
+    entry: './src/index',
     output: {
         path: path.resolve(__dirname + '/dist'),
         filename: './devextreme-intl' + postfix + '.js',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
+        devtoolModuleFilenameTemplate: 'devextreme-intl:///[resource-path]',
+        devtoolFallbackModuleFilenameTemplate: 'devextreme-intl:///[resource-path]?[hash]'
     },
     externals: {
         'devextreme/core/config': { root: [ 'DevExpress', 'config' ], amd: 'devextreme/core/config', commonjs: 'devextreme/core/config' },
