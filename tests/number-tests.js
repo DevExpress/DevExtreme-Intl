@@ -1,20 +1,20 @@
 var QUnit = require('qunitjs');
-var dxConfig = require('devextreme/core/config');
+var locale = require('devextreme/localization').locale;
 var numberLocalization = require('devextreme/localization/number');
 
 require('../src/number');
 
-[ 'de', 'en', 'ja', 'ru' ].forEach(function(locale) {
+[ 'de', 'en', 'ja', 'ru' ].forEach(function(localeId) {
     var getIntlFormatter = function(format) {
-        return (new Intl.NumberFormat(locale, format)).format;
+        return (new Intl.NumberFormat(localeId, format)).format;
     };
 
-    QUnit.module('number - ' + locale, {
+    QUnit.module('number - ' + localeId, {
         beforeEach: function() {
-            dxConfig({ locale: locale });
+            locale(localeId);
         },
         afterEach: function() {
-            dxConfig({ locale: 'en' });
+            locale('en');
         }
     });
 
@@ -138,10 +138,10 @@ require('../src/number');
 
     QUnit.module('currency', {
         beforeEach: function() {
-            dxConfig({ locale: 'en' });
+            locale('en');
         },
         afterEach: function() {
-            dxConfig({ locale: 'en' });
+            locale('en');
         }
     });
 
@@ -163,10 +163,10 @@ require('../src/number');
             };
 
         for(var currency in expectedResults) {
-            for(var locale in expectedResults[currency]) {
-                var expected = expectedResults[currency][locale];
+            for(var localeId in expectedResults[currency]) {
+                var expected = expectedResults[currency][localeId];
 
-                dxConfig({ locale: locale });
+                locale(localeId);
                 assert.equal(numberLocalization.getOpenXmlCurrencyFormat(currency), expected.replace(' ', nonBreakingSpace));
             }
         }

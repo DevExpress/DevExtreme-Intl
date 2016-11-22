@@ -1,10 +1,10 @@
 var objectAssign = require('object-assign');
-var dxConfig = require('devextreme/core/config');
-var dateLocalization = require('devextreme/localization/date');
+var locale = require('devextreme/localization').locale;
+var dateLocalization = require('devextreme/localization').date;
 var firstDayOfWeekData = require('../locale-data/first-day-of-week-data');
 
 var getIntlFormatter = function(format) {
-    return (new Intl.DateTimeFormat(dxConfig().locale, format)).format;
+    return (new Intl.DateTimeFormat(locale(), format)).format;
 };
 
 var removeLeadingZeroes = function(str) {
@@ -33,7 +33,7 @@ var intlFormats = {
 
 Object.defineProperty(intlFormats, 'shortdateshorttime', {
     get: function() {
-        var defaultOptions = Intl.DateTimeFormat(dxConfig().locale).resolvedOptions();
+        var defaultOptions = Intl.DateTimeFormat(locale()).resolvedOptions();
 
         return { year: defaultOptions.year, month: defaultOptions.month, day: defaultOptions.day, hour: 'numeric', minute: 'numeric' };
     }
@@ -202,7 +202,7 @@ dateLocalization.inject({
     },
 
     firstDayOfWeekIndex: function() {
-        var index = firstDayOfWeekData[dxConfig().locale];
+        var index = firstDayOfWeekData[locale()];
 
         return index === undefined ? 1 : index;
     }

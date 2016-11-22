@@ -1,20 +1,20 @@
 var QUnit = require('qunitjs');
-var dxConfig = require('devextreme/core/config');
+var locale = require('devextreme/localization').locale;
 var dateLocalization = require('devextreme/localization/date');
 
 require('../src/date');
 
-[ 'de', 'en', 'ja', 'ru' ].forEach(function(locale) {
+[ 'de', 'en', 'ja', 'ru' ].forEach(function(localeId) {
     var getIntlFormatter = function(format) {
-        return (new Intl.DateTimeFormat(locale, format)).format;
+        return (new Intl.DateTimeFormat(localeId, format)).format;
     };
 
-    QUnit.module('date - ' + locale, {
+    QUnit.module('date - ' + localeId, {
         beforeEach: function() {
-            dxConfig({ locale: locale });
+            locale(localeId);
         },
         afterEach: function() {
-            dxConfig({ locale: 'en' });
+            locale('en');
         }
     });
 
@@ -91,7 +91,7 @@ require('../src/date');
     });
 
     QUnit.test('format', function(assert) {
-        var defaultOptions = Intl.DateTimeFormat(locale).resolvedOptions();
+        var defaultOptions = Intl.DateTimeFormat(localeId).resolvedOptions();
         var formats = [
             { format: 'day', intlFormat: { day: 'numeric' }},
             { format: 'dayofweek', intlFormat: { weekday: 'long' }},
@@ -261,6 +261,6 @@ require('../src/date');
         var expectedValues = {
             'de': 1, 'en': 0, 'ja': 0, 'ru': 1
         };
-        assert.equal(dateLocalization.firstDayOfWeekIndex(), expectedValues[locale]);
+        assert.equal(dateLocalization.firstDayOfWeekIndex(), expectedValues[localeId]);
     });
 });
