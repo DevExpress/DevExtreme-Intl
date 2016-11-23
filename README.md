@@ -2,13 +2,13 @@
 
 # DevExtreme-Intl
 
-This integration module allows [DevExtreme](http://js.devexpress.com/) widgets to be localized by ECMAScript Internationalization API using global [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) object.
+This integration module enables localization of [DevExtreme](http://js.devexpress.com/) widgets using the global [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) object of the  ECMAScript Internationalization API.
 
 ## Getting started
 
-### Using bundle
+### Using a script tag
 
-Include `devextreme-intl` bundle after `devextreme` script
+Add a script tag for `devextreme-intl` behind your tag for the `devextreme` script:
 
 ```html
 <script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.js"></script>
@@ -18,32 +18,32 @@ or
 <script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.min.js"></script>
 ```
 
-See [example using bundle](/blob/master/examples/bundled.html).
+See [this example with the relevant script tag in place](/blob/master/examples/bundled.html).
 
-### Using modules
+### Using npm modules
 
-1. Install `devextreme-intl` package
+1. Install the `devextreme-intl` module:
 
     `npm install devextreme-intl`
 
-2. Include `devextreme-intl` package into your application entry
+2. Use a `require` call to make `devextreme-intl` available to your code:
 
     ```js
     require('devextreme-intl');
     ```
 
 
-See [example using modules](/blob/master/examples/modular.html).
+See [this example using modules](/blob/master/examples/modular.html).
 
 ## Browser support
 
-[Older browsers](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility) doesn't support ECMAScript Internationalization API. You can use [Intl.js polyfill](https://github.com/andyearnshaw/Intl.js/#intljs-) for wider browser support.
+[Some older browsers](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility) don't support the ECMAScript Internationalization API. You can use the [Intl.js polyfill](https://github.com/andyearnshaw/Intl.js/#intljs-) to support a wide range of browsers.
 
 ## API
 
-In addition to [DevExtreme format object structure](https://js.devexpress.com/Documentation/16_2/ApiReference/Common/Object_Structures/format/) formats can be specified as an `options` parameter of Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
+In addition to the [DevExtreme format object structure](https://js.devexpress.com/Documentation/16_2/ApiReference/Common/Object_Structures/format/), formats can be specified which are compatible with the  `options` parameter of the Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
 
-Example of using Intl formats in the DataGrid columns:
+Here is an example for the use of Intl formats in DataGrid columns:
 
 ```js
 $("#datagrid").dxDataGrid({
@@ -58,21 +58,21 @@ $("#datagrid").dxDataGrid({
 });
 ```
 
-See more exapmles [here](/tree/master/examples).
+See [more examples here](/tree/master/examples).
 
-Read full localization API in [DevExtreme documentation](https://js.devexpress.com/Documentation/16_2/Guide/UI_Widgets/Common/Localization/).
+You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/16_2/Guide/UI_Widgets/Common/Localization/).
 
 ## Restrictions
 
-In the [DateBox](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/) with specified [displayFormat](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) typed value cannot be parsed. You can specify the custom [parser](https://js.devexpress.com/Documentation/16_2/ApiReference/Common/Object_Structures/format/#parser) in DevExtreme format object to overcome this limitation.
+If you specify a [displayFormat](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/) widget, the typed value will not be parsed correctly. You can specify a custom [parser function](https://js.devexpress.com/Documentation/16_2/ApiReference/Common/Object_Structures/format/#parser) as part of the `displayFormat` configuration object to overcome this limitation. Here is an example:
 
 ```js
-// Will be parsed
+// value will be parsed correctly
 $("#datebox").dxDateBox({
     value: new Date()
 });
 
-// Will not be parsed
+// value will not be parsed correctly
 $("#datebox").dxDateBox({
     value: new Date(),
     displayFormat: {
@@ -81,7 +81,7 @@ $("#datebox").dxDateBox({
     }
 });
 
-// Will be parsed by custom parser method
+// Add a custom parser function
 $("#datebox").dxDateBox({
     value: new Date(),
     displayFormat: {
@@ -96,11 +96,11 @@ $("#datebox").dxDateBox({
 
 ## Development
 
-### Install development external dependencies
+### Install external development dependencies
 
     npm install
 
-### Tests
+### Run tests
 
     npm test
 
@@ -115,10 +115,10 @@ Build the distribution UMD bundles `devextreme-intl.js` and `devextreme-intl.min
 Familiarize yourself with the
 [DevExtreme Commerical License](https://www.devexpress.com/Support/EULAs/DevExtreme.xml).
 
-**DevExtreme integration with ECMAScript Internationalization API is released as a MIT-licensed (free and open-source) add-on to DevExtreme.**
+**DevExtreme integration with ECMAScript Internationalization API is released as an MIT-licensed (free and open-source) add-on to DevExtreme.**
 
 ## Support & Feedback
 
-* For the Support & Feedback on general Intl questions, use the [MDN Feedback](https://developer.mozilla.org/ru/docs/MDN/Feedback)
-* For questions regarding DevExtreme libraries and JavaScript API, use [DevExpress Support Center](https://www.devexpress.com/Support/Center)
+* For support and feedback on general Intl questions, use [MDN Feedback](https://developer.mozilla.org/ru/docs/MDN/Feedback)
+* For questions regarding DevExtreme libraries and JavaScript APIs, use the [DevExpress Support Center](https://www.devexpress.com/Support/Center)
 * For DevExtreme Intl integration bugs, questions and suggestions, use the [GitHub issue tracker](https://github.com/DevExpress/DevExtreme-Intl/issues)
