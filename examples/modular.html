@@ -48,10 +48,9 @@
         System.import('devextreme/localization/ru/widgets-mobile.ru.js');
         System.import('devextreme/localization/ru/widgets-web.ru.js');
 
-        // Uncomment following lines to set locale. Otherwise, 'navigator.language' will be used.
-        // System.import('devextreme/localization').then(function(localization) {
-        //     localization.locale("de");
-        // });
+        System.import('devextreme/localization').then(function(localization) {
+            localization.locale(navigator.language);
+        });
     </script>
 
 
