@@ -1,14 +1,15 @@
 var objectAssign = require('object-assign');
 var dxConfig = require('devextreme/core/config');
-var numberLocalization = require('devextreme/localization/number');
+var locale = require('devextreme/localization').locale;
+var numberLocalization = require('devextreme/localization').number;
 
 var currencyOptionsCache = {},
     detectCurrencySymbolRegex = /([^\s0]+)?(\s*)0*[.,]*0*(\s*)([^\s0]+)?/,
     getFormatter = function(format) {
-        return (new Intl.NumberFormat(dxConfig().locale, format)).format;
+        return (new Intl.NumberFormat(locale(), format)).format;
     },
     getCurrencyFormatter = function(currency) {
-        return (new Intl.NumberFormat(dxConfig().locale, { style: 'currency', currency: currency }));
+        return (new Intl.NumberFormat(locale(), { style: 'currency', currency: currency }));
     };
 
 numberLocalization.resetInjection();
@@ -105,10 +106,10 @@ numberLocalization.inject({
         };
     },
     _getCurrencyOptions: function(currency) {
-        var byCurrencyCache = currencyOptionsCache[dxConfig().locale];
+        var byCurrencyCache = currencyOptionsCache[locale()];
 
         if(!byCurrencyCache) {
-            byCurrencyCache = currencyOptionsCache[dxConfig().locale] = {};
+            byCurrencyCache = currencyOptionsCache[locale()] = {};
         }
 
         var result = byCurrencyCache[currency];
