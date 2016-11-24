@@ -26,10 +26,10 @@ See [this example with the relevant script tag in place](/blob/master/examples/b
 
     `npm install devextreme-intl`
 
-2. Use a `require` call to make `devextreme-intl` available to your code:
+2. Use an `import` call to make `devextreme-intl` available to your code:
 
     ```js
-    require('devextreme-intl');
+    import 'devextreme-intl';
     ```
 
 
