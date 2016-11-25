@@ -18,7 +18,7 @@ or
 <script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.min.js"></script>
 ```
 
-See [this example with the relevant script tag in place](/blob/master/examples/bundled.html).
+See [this example with the relevant script tag in place](/examples/bundled.html).
 
 ### Using npm modules
 
@@ -33,7 +33,7 @@ See [this example with the relevant script tag in place](/blob/master/examples/b
     ```
 
 
-See [this example using modules](/blob/master/examples/modular.html).
+See [this example using modules](/examples/modular.html).
 
 ## Browser support
 
@@ -58,7 +58,7 @@ $("#datagrid").dxDataGrid({
 });
 ```
 
-See [more examples here](/tree/master/examples).
+See [more examples here](/examples).
 
 You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/16_2/Guide/UI_Widgets/Common/Localization/).
 
