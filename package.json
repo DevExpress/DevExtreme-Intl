@@ -13,10 +13,11 @@
     "dist/devextreme-intl.js",
     "dist/devextreme-intl.min.js"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "devextreme": "16.2-unstable"
   },
   "devDependencies": {
+    "devextreme": "16.2-unstable",
     "cldr-core": "^30.0.2",
     "cldrjs": "^0.3.1",
     "eslint": "^3.10.2",
