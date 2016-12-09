@@ -18,7 +18,8 @@
                 devextreme: 'npm:devextreme',
                 'devextreme-intl': '../dist/devextreme-intl.dev.js',
                 jquery: 'npm:jquery/dist/jquery.min.js',
-                jszip: 'npm:jszip/dist/jszip.min.js'
+                jszip: 'npm:jszip/dist/jszip.min.js',
+                json: 'npm:systemjs-plugin-json/json.js'
             },
             packages: {
                 'devextreme': {
@@ -33,22 +34,15 @@
     <script>
         System.import('devextreme-intl');
 
-        System.import('devextreme/localization/de/core.de.js');
-        System.import('devextreme/localization/de/widgets-base.de.js');
-        System.import('devextreme/localization/de/widgets-mobile.de.js');
-        System.import('devextreme/localization/de/widgets-web.de.js');
-
-        System.import('devextreme/localization/ja/core.ja.js');
-        System.import('devextreme/localization/ja/widgets-base.ja.js');
-        System.import('devextreme/localization/ja/widgets-mobile.ja.js');
-        System.import('devextreme/localization/ja/widgets-web.ja.js');
-
-        System.import('devextreme/localization/ru/core.ru.js');
-        System.import('devextreme/localization/ru/widgets-base.ru.js');
-        System.import('devextreme/localization/ru/widgets-mobile.ru.js');
-        System.import('devextreme/localization/ru/widgets-web.ru.js');
-
         System.import('devextreme/localization').then(function(localization) {
+            var deMessages = System.import('devextreme/localization/messages/de.json!json');
+            var jaMessages = System.import('devextreme/localization/messages/ja.json!json');
+            var ruMessages = System.import('devextreme/localization/messages/ru.json!json');
+
+            localization.loadMessages(deMessages);
+            localization.loadMessages(jaMessages);
+            localization.loadMessages(ruMessages);
+
             localization.locale(navigator.language);
         });
     </script>
