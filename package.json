@@ -40,7 +40,7 @@
   },
   "scripts": {
     "prepare-build": "node scripts/locale-data-generator.js",
-    "build": "npm run prepare-build -s && webpack && webpack --min && webpack --dev",
+    "build": "npm run prepare-build -s && webpack && webpack --min",
     "test-dev": "npm run prepare-build -s && parallelshell \"webpack --dev\" \"karma start --browsers PhantomJS\"",
     "lint": "eslint .",
     "test": "npm run build -s && npm run lint -s && karma start --browsers PhantomJS --single-run",
