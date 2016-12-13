@@ -34,6 +34,7 @@
     "phantomjs-prebuilt": "^2.1.7",
     "qunitjs": "^1.23.1",
     "systemjs": "^0.19.41",
+    "systemjs-plugin-json": "^0.2.2",
     "webpack": "^1.13.3",
     "yargs": "^6.4.0"
   },
