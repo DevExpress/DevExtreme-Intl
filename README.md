@@ -60,7 +60,7 @@ $("#datagrid").dxDataGrid({
 
 See [more examples here](/examples).
 
-You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/16_2/Guide/UI_Widgets/Common/Localization/).
+You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/16_2/Guide/Widgets/Common/UI_Widgets/Localization/).
 
 ## Restrictions
 
