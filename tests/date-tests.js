@@ -36,9 +36,14 @@ require('../src/date');
     });
 
     QUnit.test('getDayNames', function(assert) {
+        var dayNames = {
+            en: { long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] }
+        };
         var getIntlMonthNames = function(format) {
-            return Array.apply(null, new Array(7)).map(function(_, dayIndex) {
-                return getIntlFormatter({ weekday: format })(new Date(0, 0, dayIndex + 1));
+            var dayNamesByLocale = dayNames[localeId] && dayNames[localeId][format];
+
+            return dayNamesByLocale || Array.apply(null, new Array(7)).map(function(_, dayIndex) {
+                return getIntlFormatter({ weekday: format })(new Date(Date.UTC(0, 0, dayIndex + 1)));
             });
         };
 
