@@ -19,6 +19,10 @@ require('../src/number');
     });
 
     QUnit.test('format', function(assert) {
+        var separator = localeId === 'de' || localeId === 'ru' ? ',' : '.';
+        function getLocalizedFixedNumber(integerPart, fractionPart) {
+            return integerPart + separator + fractionPart;
+        }
         var assertData = [
             {
                 value: 43789,
@@ -40,6 +44,12 @@ require('../src/number');
 
             { value: 12.345, format: 'fixedPoint', expected: '12' },
             { value: 12.345, format: { type: 'fixedPoint' }, expected: '12' },
+            { value: 1, format: { type: 'fixedPoint', precision: null }, expected: '1' },
+            { value: 1.2, format: { type: 'fixedPoint', precision: null }, expected: getLocalizedFixedNumber(1, 2) },
+            { value: 1.22, format: { type: 'fixedPoint', precision: null }, expected: getLocalizedFixedNumber(1, 22) },
+            { value: 1.222, format: { type: 'fixedPoint', precision: null }, expected: getLocalizedFixedNumber(1, 222) },
+            { value: 1.2225, format: { type: 'fixedPoint', precision: null }, expected: getLocalizedFixedNumber(1, 2225) },
+            { value: 1.22222228, format: { type: 'fixedPoint', precision: null }, expected: getLocalizedFixedNumber(1, 22222228) },
             {
                 value: 12.345,
                 format: { type: 'fixedPoint', precision: 1 },
