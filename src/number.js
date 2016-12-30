@@ -32,10 +32,7 @@ numberLocalization.inject({
                 round: value < 0 ? 'ceil' : 'floor'
             };
         } else {
-            config = {
-                minimumFractionDigits: formatConfig.precision || 0,
-                maximumFractionDigits: formatConfig.precision || 0
-            };
+            config = this._getPrecisionConfig(formatConfig.precision);
         }
 
         if(format === 'percent') {
@@ -43,6 +40,23 @@ numberLocalization.inject({
         } else if(format === 'currency') {
             config.style = 'currency';
             config.currency = formatConfig.currency || dxConfig().defaultCurrency;
+        }
+
+        return config;
+    },
+    _getPrecisionConfig: function(precision) {
+        var config;
+
+        if(precision === null) {
+            config = {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 20
+            };
+        } else {
+            config = {
+                minimumFractionDigits: precision || 0,
+                maximumFractionDigits: precision || 0
+            };
         }
 
         return config;
