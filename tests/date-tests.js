@@ -43,7 +43,7 @@ require('../src/date');
             var dayNamesByLocale = dayNames[localeId] && dayNames[localeId][format];
 
             return dayNamesByLocale || Array.apply(null, new Array(7)).map(function(_, dayIndex) {
-                return getIntlFormatter({ weekday: format })(new Date(Date.UTC(0, 0, dayIndex + 1)));
+                return getIntlFormatter({ weekday: format, timeZone: 'UTC' })(new Date(Date.UTC(0, 0, dayIndex)));
             });
         };
 

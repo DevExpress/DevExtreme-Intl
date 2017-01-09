@@ -67,7 +67,7 @@ dateLocalization.inject({
 
         var getIntlMonthNames = function(format) {
             return Array.apply(null, new Array(7)).map(function(_, dayIndex) {
-                return getIntlFormatter({ weekday: format })(new Date(Date.UTC(0, 0, dayIndex + 1)));
+                return getIntlFormatter({ weekday: format, timeZone: 'UTC' })(new Date(Date.UTC(0, 0, dayIndex)));
             });
         };
 
