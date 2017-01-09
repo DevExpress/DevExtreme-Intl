@@ -65,13 +65,13 @@ dateLocalization.inject({
             narrow: 'narrow'
         };
 
-        var getIntlMonthNames = function(format) {
+        var getIntlDayNames = function(format) {
             return Array.apply(null, new Array(7)).map(function(_, dayIndex) {
                 return getIntlFormatter({ weekday: format, timeZone: 'UTC' })(new Date(Date.UTC(0, 0, dayIndex)));
             });
         };
 
-        var result = getIntlMonthNames(intlFormats[format || 'wide']);
+        var result = getIntlDayNames(intlFormats[format || 'wide']);
 
         return result;
     },
