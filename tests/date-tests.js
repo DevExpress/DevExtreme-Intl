@@ -36,26 +36,31 @@ require('../src/date');
     });
 
     QUnit.test('getDayNames', function(assert) {
-        var getIntlMonthNames = function(format) {
-            return Array.apply(null, new Array(7)).map(function(_, dayIndex) {
-                return getIntlFormatter({ weekday: format })(new Date(0, 0, dayIndex + 1));
+        var dayNames = {
+            en: { long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] }
+        };
+        var getIntlDayNames = function(format) {
+            var dayNamesByLocale = dayNames[localeId] && dayNames[localeId][format];
+
+            return dayNamesByLocale || Array.apply(null, new Array(7)).map(function(_, dayIndex) {
+                return getIntlFormatter({ weekday: format, timeZone: 'UTC' })(new Date(Date.UTC(0, 0, dayIndex)));
             });
         };
 
         assert.deepEqual(dateLocalization.getDayNames(),
-            getIntlMonthNames('long'),
+            getIntlDayNames('long'),
             'Array of day names without format');
         assert.deepEqual(dateLocalization.getDayNames('wide'),
-            getIntlMonthNames('long'),
+            getIntlDayNames('long'),
             'Array of day names (wide format)');
         assert.deepEqual(dateLocalization.getDayNames('abbreviated'),
-            getIntlMonthNames('short'),
+            getIntlDayNames('short'),
             'Array of day names (abbreviated format)');
         assert.deepEqual(dateLocalization.getDayNames('short'),
-            getIntlMonthNames('narrow'),
+            getIntlDayNames('narrow'),
             'Array of day names (short format)');
         assert.deepEqual(dateLocalization.getDayNames('narrow'),
-            getIntlMonthNames('narrow'),
+            getIntlDayNames('narrow'),
             'Array of day names (narrow format)');
     });
 
