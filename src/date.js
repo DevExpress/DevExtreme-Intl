@@ -39,7 +39,7 @@ Object.defineProperty(intlFormats, 'shortdateshorttime', {
     }
 });
 
-var getIntlFomat = function(format) {
+var getIntlFormat = function(format) {
     return typeof format === 'string' && intlFormats[format.toLowerCase()];
 };
 
@@ -87,12 +87,13 @@ dateLocalization.inject({
 
         format = format.type || format;
 
-        var intlFormat = getIntlFomat(format);
+        var intlFormat = getIntlFormat(format);
         if(intlFormat) {
             return getIntlFormatter(intlFormat)(date);
         }
 
-        if(format.formatter || typeof format === 'function' || typeof format === 'string') {
+        var formatType = typeof format;
+        if(format.formatter || formatType === 'function' || formatType === 'string') {
             return this.callBase.apply(this, arguments);
         }
 
@@ -118,7 +119,7 @@ dateLocalization.inject({
             return;
         }
 
-        var dateArgs = this._generateDateArgs(dateString, formatParts, dateParts);
+        var dateArgs = this._generateDateArgs(formatParts, dateParts);
 
         var constructDate = function(dateArgs, ampmShift) {
             var hoursShift = ampmShift ? 12 : 0;
@@ -134,7 +135,7 @@ dateLocalization.inject({
         return constructValidDate(false) || constructValidDate(true);
     },
 
-    _generateDateArgs: function(dateString, formatParts, dateParts) {
+    _generateDateArgs: function(formatParts, dateParts) {
         var currentDate = new Date();
         var dateArgs = {
             year: currentDate.getFullYear(),
