@@ -114,7 +114,6 @@ require('../src/date');
             { format: 'shorttime', intlFormat: { hour: 'numeric', minute: 'numeric' }},
             { format: 'shortyear', intlFormat: { year: '2-digit' }},
             { format: 'year', intlFormat: { year: 'numeric' }},
-            { format: 'datetime-local', expected: '2015-03-02T13:04:05' },
         ];
 
         var quarterData = [
