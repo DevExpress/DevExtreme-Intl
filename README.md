@@ -64,7 +64,19 @@ You can find full documentation of the localization API in the [DevExtreme docum
 
 ## Restrictions
 
-If you specify a [displayFormat](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/) widget, the typed value will not be parsed correctly. You can specify a custom [parser function](https://js.devexpress.com/Documentation/16_2/ApiReference/Common/Object_Structures/format/#parser) as part of the `displayFormat` configuration object to overcome this limitation. Here is an example:
+Date parsing is not supported by the ECMAScript Internationalization API. You can read the position of the ECMAScript community [here](https://bugs.ecmascript.org/show_bug.cgi?id=770).
+That's why some minor DevExtreme functionality is restricted.
+
+- If you specify a [displayFormat](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/) widget, the typed value will not be parsed correctly.
+- If you enable [searchPanel](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDataGrid/Configuration/searchPanel/) for the [DataGrid](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDataGrid/) widget, the search by date columns will not work.
+
+If you are using one of them, you can meet this message in your console:
+```
+W0012 - Date parsing is invoked while the parser is not defined.
+See: http://js.devexpress.com/error/16_2/W0012
+```
+
+You can specify a custom [parser function](https://js.devexpress.com/Documentation/16_2/ApiReference/Common/Object_Structures/format/#parser) as a part of the `displayFormat` configuration object to overcome this limitation. Here are some examples:
 
 ```js
 // value will be parsed correctly
@@ -91,6 +103,41 @@ $("#datebox").dxDateBox({
             // return parsed date if possible
         }
     }
+});
+
+// Search will not work by the date column
+$("#datagrid").dxDataGrid({
+    dataSource: dataSource,
+    searchPanel: {
+        visible: true
+    },
+    columns: [{
+        dataField: "OrderDate",
+        format: {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        }
+    }]
+});
+
+// Add a custom parser function
+$("#datagrid").dxDataGrid({
+    dataSource: dataSource,
+    searchPanel: {
+        visible: true
+    },
+    columns: [{
+        dataField: "OrderDate",
+        format: {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            parser: function(dateString) {
+                // return parsed date if possible
+            }
+        }
+    }]
 });
 ```
 
