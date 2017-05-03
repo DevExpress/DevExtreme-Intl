@@ -41,7 +41,7 @@ See [this example using modules](/examples/modular.html).
 
 ## API
 
-In addition to the [DevExtreme format object structure](https://js.devexpress.com/Documentation/16_2/ApiReference/Common/Object_Structures/format/), formats can be specified which are compatible with the  `options` parameter of the Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
+In addition to the [DevExtreme format object structure](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/), formats can be specified which are compatible with the  `options` parameter of the Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
 
 Here is an example for the use of Intl formats in DataGrid columns:
 
@@ -60,23 +60,23 @@ $("#datagrid").dxDataGrid({
 
 See [more examples here](/examples).
 
-You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/16_2/Guide/Widgets/Common/UI_Widgets/Localization/).
+You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/17_1/Guide/Widgets/Common/UI_Widgets/Localization/).
 
 ## Restrictions
 
 Date parsing is not supported by the ECMAScript Internationalization API. You can read the position of the ECMAScript community [here](https://bugs.ecmascript.org/show_bug.cgi?id=770).
 That's why some minor DevExtreme functionality is restricted.
 
-- If you specify a [displayFormat](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDateBox/) widget, the typed value will not be parsed correctly.
-- If you enable [searchPanel](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDataGrid/Configuration/searchPanel/) for the [DataGrid](https://js.devexpress.com/Documentation/16_2/ApiReference/UI_Widgets/dxDataGrid/) widget, the search by date columns will not work.
+- If you specify a [displayFormat](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/) widget, the typed value will not be parsed correctly.
+- If you enable [searchPanel](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDataGrid/Configuration/searchPanel/) for the [DataGrid](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDataGrid/) widget, the search by date columns will not work.
 
 If you are using one of them, you can meet this message in your console:
 ```
 W0012 - Date parsing is invoked while the parser is not defined.
-See: http://js.devexpress.com/error/16_2/W0012
+See: http://js.devexpress.com/error/17_1/W0012
 ```
 
-You can specify a custom [parser function](https://js.devexpress.com/Documentation/16_2/ApiReference/Common/Object_Structures/format/#parser) as a part of the `displayFormat` configuration object to overcome this limitation. Here are some examples:
+You can specify a custom [parser function](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/#parser) as a part of the `displayFormat` configuration object to overcome this limitation. Here are some examples:
 
 ```js
 // value will be parsed correctly
