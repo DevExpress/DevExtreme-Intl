@@ -268,3 +268,27 @@ require('../src/date');
         assert.equal(dateLocalization.firstDayOfWeekIndex(), expectedValues[localeId]);
     });
 });
+
+QUnit.module('date - browser specific behavior');
+
+// NOTE: Workaroud for the MS Edge bug https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/101503/
+QUnit.test('formatted value should not contain &lrm & &rlm symbols', function(assert) {
+    var unwantedSymbols = '\u200E\u200F';
+    var originalDateTimeFormatter = Intl.DateTimeFormat;
+
+    try {
+        Intl.DateTimeFormat = function(locale, config) {
+            return {
+                format: function(date) {
+                    return unwantedSymbols + new originalDateTimeFormatter(locale, config).format(date);
+                }
+            };
+        };
+
+        assert.equal(dateLocalization.format(new Date(2000, 0, 1), { month: 'long' }), 'January');
+        assert.equal(dateLocalization.getMonthNames()[0], 'January');
+        assert.equal(dateLocalization.getDayNames()[0], 'Sunday');
+    } finally {
+        Intl.DateTimeFormat = originalDateTimeFormatter;
+    }
+});
