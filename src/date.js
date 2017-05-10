@@ -3,8 +3,12 @@ var locale = require('devextreme/localization').locale;
 var dateLocalization = require('devextreme/localization').date;
 var firstDayOfWeekData = require('../locale-data/first-day-of-week-data');
 
+var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
+
 var getIntlFormatter = function(format) {
-    return (new Intl.DateTimeFormat(locale(), format)).format;
+    return function(date) {
+        return (new Intl.DateTimeFormat(locale(), format)).format(date).replace(SYMBOLS_TO_REMOVE_REGEX, '');
+    };
 };
 
 var removeLeadingZeroes = function(str) {
