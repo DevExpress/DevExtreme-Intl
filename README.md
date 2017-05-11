@@ -160,7 +160,7 @@ Build the distribution UMD bundles `devextreme-intl.js` and `devextreme-intl.min
 ## License
 
 Familiarize yourself with the
-[DevExtreme Commerical License](https://www.devexpress.com/Support/EULAs/DevExtreme.xml).
+[DevExtreme License](https://js.devexpress.com/Licensing/).
 
 **DevExtreme integration with ECMAScript Internationalization API is released as an MIT-licensed (free and open-source) add-on to DevExtreme.**
 
