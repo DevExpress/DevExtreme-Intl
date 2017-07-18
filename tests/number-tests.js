@@ -103,17 +103,17 @@ require('../src/number');
             {
                 value: 12345.67,
                 format: { type: 'currency largeNumber', precision: 2 },
-                expected: getIntlFormatter({style: 'currency', currency: 'USD', minimumFractionDigits: 2 })(12.34567) + 'K'
+                expected: getIntlFormatter({style: 'currency', currency: 'USD', minimumFractionDigits: 2 })(12.34567).replace(/(\d|.$)(\D*)$/, '$1K$2')
             },
             {
                 value: 12345.67,
                 format: { type: 'currency thousands', precision: 2 },
-                expected: getIntlFormatter({style: 'currency', currency: 'USD', minimumFractionDigits: 2 })(12.34567) + 'K'
+                expected: getIntlFormatter({style: 'currency', currency: 'USD', minimumFractionDigits: 2 })(12.34567).replace(/(\d|.$)(\D*)$/, '$1K$2')
             },
             {
                 value: 12345.67,
                 format: { type: 'currency millions', precision: 3 },
-                expected: getIntlFormatter({style: 'currency', currency: 'USD', minimumFractionDigits: 3 })(0.012) + 'M'
+                expected: getIntlFormatter({style: 'currency', currency: 'USD', minimumFractionDigits: 3 })(0.012).replace(/(\d|.$)(\D*)$/, '$1M$2')
             }
         ];
 
