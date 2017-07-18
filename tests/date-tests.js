@@ -235,6 +235,12 @@ require('../src/date');
         });
     });
 
+    QUnit.test('parse wrong arguments', function(assert) {
+        assert.equal(dateLocalization.parse(null, 'shortDate'), undefined);
+        assert.equal(dateLocalization.parse(undefined, 'shortDate'), undefined);
+        assert.equal(dateLocalization.parse('', 'shortDate'), undefined);
+    });
+
     QUnit.test('DevExtreme format uses default locale options', function(assert) {
         var date = new Date();
 

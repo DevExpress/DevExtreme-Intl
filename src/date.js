@@ -106,7 +106,7 @@ dateLocalization.inject({
 
     parse: function(dateString, format) {
         var SIMPLE_FORMATS = ['shortdate', 'shorttime', 'shortdateshorttime', 'longtime'];
-        if(typeof format === 'string' && SIMPLE_FORMATS.indexOf(format.toLowerCase()) > -1) {
+        if(dateString && typeof format === 'string' && SIMPLE_FORMATS.indexOf(format.toLowerCase()) > -1) {
             return this._parseDateBySimpleFormat(dateString, format.toLowerCase());
         }
 
