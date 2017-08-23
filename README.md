@@ -4,6 +4,8 @@
 
 This integration module enables localization of [DevExtreme](http://js.devexpress.com/) widgets using the global [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) object of the  ECMAScript Internationalization API.
 
+Using *Intl* is an alternative to the *Globalize* based mechanism [documented here](https://js.devexpress.com/Documentation/Guide/Widgets/Common/UI_Widgets/Localization_-_Use_Globalize/). Please note that in comparison to *Globalize*, there are some restrictions which are described in [the section *Restrictions*](#restrictions) below.
+
 ## Getting started
 
 ### Using a script tag
@@ -43,6 +45,8 @@ See [this example using modules](/examples/modular.html).
 
 In addition to the [DevExtreme format object structure](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/), formats can be specified which are compatible with the  `options` parameter of the Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
 
+Note that the [DevExtreme format object structure](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/) documentation page refers to special structures supported by *Globalize*. When using *DevExtreme-Intl*, these structures are either unsupported or need to adhere to [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) structural requirements instead.
+
 Here is an example for the use of Intl formats in DataGrid columns:
 
 ```js
@@ -64,27 +68,28 @@ You can find full documentation of the localization API in the [DevExtreme docum
 
 ## Restrictions
 
-Date parsing is not supported by the ECMAScript Internationalization API. You can read the position of the ECMAScript community [here](https://bugs.ecmascript.org/show_bug.cgi?id=770).
-That's why some minor DevExtreme functionality is restricted.
+Date parsing is not supported by the ECMAScript Internationalization API. You can read about the position of the ECMAScript community [here](https://bugs.ecmascript.org/show_bug.cgi?id=770).
+As a result, some minor DevExtreme functionality is restricted.
 
-- If you specify a [displayFormat](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/) widget, the typed value will not be parsed correctly.
+- If you specify a [displayFormat](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/) widget, any value typed into the editor by a user will not be parsed correctly.
 - If you enable [searchPanel](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDataGrid/Configuration/searchPanel/) for the [DataGrid](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDataGrid/) widget, the search by date columns will not work.
+- If you configure a [format](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/Configuration/columns/#format) for a DataGrid column, any value typed into the editor by a user will not be parsed correctly.
 
-If you are using one of them, you can meet this message in your console:
+If a widget tries to parse a value in one of these scenarios, you will see this message in the JavaScript console:
 ```
 W0012 - Date parsing is invoked while the parser is not defined.
 See: http://js.devexpress.com/error/17_1/W0012
 ```
 
-You can specify a custom [parser function](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/#parser) as a part of the `displayFormat` configuration object to overcome this limitation. Here are some examples:
+You can specify a custom [parser function](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/#parser) as part of the `displayFormat` or `column.format` configuration objects to overcome this limitation. Here are some examples:
 
 ```js
-// value will be parsed correctly
+// Value will be parsed correctly
 $("#datebox").dxDateBox({
     value: new Date()
 });
 
-// value will not be parsed correctly
+// Value will not be parsed correctly
 $("#datebox").dxDateBox({
     value: new Date(),
     displayFormat: {
@@ -105,7 +110,7 @@ $("#datebox").dxDateBox({
     }
 });
 
-// Search will not work by the date column
+// Search and manual data entry will not work for the date column
 $("#datagrid").dxDataGrid({
     dataSource: dataSource,
     searchPanel: {
