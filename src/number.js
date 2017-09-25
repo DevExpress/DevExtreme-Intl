@@ -96,7 +96,7 @@ numberLocalization.inject({
         }
 
         var decimalSeparator = this._getDecimalSeparator(format);
-        var cleanUpRegexp = new RegExp('[^0-9\\' + decimalSeparator + ']', 'g');
+        var cleanUpRegexp = new RegExp('[^0-9\-\\' + decimalSeparator + ']', 'g');
 
         return text.replace(cleanUpRegexp, '').replace(decimalSeparator, legitDecimalSeparator);
     },
