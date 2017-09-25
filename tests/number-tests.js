@@ -133,6 +133,7 @@ require('../src/number');
         assert.equal(numberLocalization.parse(getIntlFormatter({ maximumFractionDigits: 0, minimumFractionDigits: 0 })(437)), 437);
         assert.equal(numberLocalization.parse(getIntlFormatter({ maximumFractionDigits: 1, minimumFractionDigits: 1 })(1.2)), 1.2);
         assert.equal(numberLocalization.parse(getIntlFormatter({ maximumFractionDigits: 0, minimumFractionDigits: 0 })(12000)), 12000);
+        assert.equal(numberLocalization.parse(getIntlFormatter({ maximumFractionDigits: 0, minimumFractionDigits: 0 })(-10)), -10);
 
         assert.equal(numberLocalization.parse(getIntlFormatter({ style: 'currency', currency: 'USD', minimumFractionDigits: 1 })(1.2)), 1.2);
     });
