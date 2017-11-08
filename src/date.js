@@ -62,7 +62,7 @@ dateLocalization.inject({
 
             if(type === 'format') {
                 var text = getIntlFormatter({ day: 'numeric', month: monthFormat })(date),
-                    parts = text.indexOf(' ') >= 0 ? text.split(' ') : text.split('13');
+                    parts = text.split(' ');
                 if(parts.length === 2) {
                     if(parts[0].indexOf('13') >= 0) {
                         return parts[1];
