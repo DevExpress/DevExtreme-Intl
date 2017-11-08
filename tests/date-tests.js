@@ -298,3 +298,23 @@ QUnit.test('formatted value should not contain &lrm & &rlm symbols', function(as
         Intl.DateTimeFormat = originalDateTimeFormatter;
     }
 });
+
+QUnit.module('date - specific locales', {
+    afterEach: function() {
+        locale('en');
+    }
+});
+
+QUnit.test('getMonthNames non-standalone', function(assert) {
+    var checkMonthName = function(localeId, type, month, value) {
+        locale(localeId);
+        assert.equal(dateLocalization.getMonthNames('wide', 'format')[month], value, 'Month name for locale ' + localeId);
+    };
+
+    checkMonthName('en', 10, 'November');
+    checkMonthName('ru', 10, 'ноября');
+    checkMonthName('zh', 10, '11月');
+    checkMonthName('hr', 10, 'studenoga');
+    checkMonthName('ar', 10, 'نوفمبر');
+});
+

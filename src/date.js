@@ -49,7 +49,7 @@ var getIntlFormat = function(format) {
 
 dateLocalization.resetInjection();
 dateLocalization.inject({
-    getMonthNames: function(format) {
+    getMonthNames: function(format, type) {
         var intlFormats = {
             wide: 'long',
             abbreviated: 'short',
@@ -57,7 +57,23 @@ dateLocalization.inject({
         };
 
         return Array.apply(null, new Array(12)).map(function(_, monthIndex) {
-            return getIntlFormatter({ month: intlFormats[format || 'wide'] })(new Date(0, monthIndex, 2));
+            var date = new Date(0, monthIndex, 13, 1),
+                monthFormat = intlFormats[format || 'wide'];
+
+            if(type === 'format') {
+                var text = getIntlFormatter({ day: 'numeric', month: monthFormat })(date),
+                    parts = text.indexOf(' ') >= 0 ? text.split(' ') : text.split('13');
+                if(parts.length === 2) {
+                    if(parts[0].indexOf('13') >= 0) {
+                        return parts[1];
+                    }
+                    if(parts[1].indexOf('13') >= 0) {
+                        return parts[0];
+                    }
+                }
+            }
+
+            return getIntlFormatter({ month: monthFormat })(date);
         });
     },
 
