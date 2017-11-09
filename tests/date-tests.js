@@ -4,9 +4,13 @@ var dateLocalization = require('devextreme/localization/date');
 
 require('../src/date');
 
-[ 'de', 'en', 'ja', 'ru' ].forEach(function(localeId) {
+var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
+
+[ 'de', 'en', 'ja', 'ru', 'zh', 'hr', 'ar' ].forEach(function(localeId) {
     var getIntlFormatter = function(format) {
-        return (new Intl.DateTimeFormat(localeId, format)).format;
+        return function(date) {
+            return (new Intl.DateTimeFormat(localeId, format)).format(date).replace(SYMBOLS_TO_REMOVE_REGEX, '');
+        };
     };
 
     QUnit.module('date - ' + localeId, {
@@ -269,7 +273,7 @@ require('../src/date');
 
     QUnit.test('firstDayOfWeekIndex', function(assert) {
         var expectedValues = {
-            'de': 1, 'en': 0, 'ja': 0, 'ru': 1
+            'de': 1, 'en': 0, 'ja': 0, 'ru': 1, 'zh': 0, 'hr': 1, 'ar': 6
         };
         assert.equal(dateLocalization.firstDayOfWeekIndex(), expectedValues[localeId]);
     });
