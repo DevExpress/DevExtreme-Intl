@@ -13,6 +13,10 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
         };
     };
 
+    var formatNumber = function(number) {
+        return (new Intl.NumberFormat(localeId)).format(number);
+    };
+
     QUnit.module('date - ' + localeId, {
         beforeEach: function() {
             locale(localeId);
@@ -108,7 +112,7 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
             { format: 'longdate', intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }},
             { format: 'longdatelongtime', intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }},
             { format: 'longtime', intlFormat: { hour: 'numeric', minute: 'numeric', second: 'numeric' }},
-            { format: 'millisecond', expected: '006' },
+            { format: 'millisecond', expected: formatNumber(0) + formatNumber(0) + formatNumber(6) },
             { format: 'minute', intlFormat: { minute: 'numeric' }},
             { format: 'month', intlFormat: { month: 'long' }},
             { format: 'monthandday', intlFormat: { month: 'long', day: 'numeric' }},
