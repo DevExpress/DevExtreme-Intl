@@ -43,6 +43,20 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
         assert.deepEqual(dateLocalization.getMonthNames('narrow'), monthsNarrow, 'Array of month names (narrow format)');
     });
 
+    QUnit.test('getMonthNames non-standalone', function(assert) {
+        var expected = {
+            de: 'November',
+            en: 'November',
+            ja: '11月',
+            ru: 'ноября',
+            zh: '十一月',
+            hr: 'studenoga',
+            ar: 'نوفمبر'
+        };
+
+        assert.equal(dateLocalization.getMonthNames('wide', 'format')[10], expected[localeId], 'Array of non-standalone month names');
+    });
+
     QUnit.test('getDayNames', function(assert) {
         var dayNames = {
             en: { long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] }
@@ -277,7 +291,7 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
     QUnit.test('firstDayOfWeekIndex', function(assert) {
         var expectedValues = {
-            'de': 1, 'en': 0, 'ja': 0, 'ru': 1, 'zh': 0, 'hr': 1, 'ar': 6
+            de: 1, en: 0, ja: 0, ru: 1, zh: 0, hr: 1, ar: 6
         };
         assert.equal(dateLocalization.firstDayOfWeekIndex(), expectedValues[localeId]);
     });
@@ -305,24 +319,5 @@ QUnit.test('formatted value should not contain &lrm & &rlm symbols', function(as
     } finally {
         Intl.DateTimeFormat = originalDateTimeFormatter;
     }
-});
-
-QUnit.module('date - specific locales', {
-    afterEach: function() {
-        locale('en');
-    }
-});
-
-QUnit.test('getMonthNames non-standalone', function(assert) {
-    var checkMonthName = function(localeId, type, month, value) {
-        locale(localeId);
-        assert.equal(dateLocalization.getMonthNames('wide', 'format')[month], value, 'Month name for locale ' + localeId);
-    };
-
-    checkMonthName('en', 10, 'November');
-    checkMonthName('ru', 10, 'ноября');
-    checkMonthName('zh', 10, '11月');
-    checkMonthName('hr', 10, 'studenoga');
-    checkMonthName('ar', 10, 'نوفمبر');
 });
 
