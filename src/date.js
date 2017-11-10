@@ -11,6 +11,41 @@ var getIntlFormatter = function(format) {
     };
 };
 
+var formatNumber = function(number) {
+    return (new Intl.NumberFormat(locale())).format(number);
+};
+
+var getAlternativeNumeralsMap = (function() {
+    var numeralsMapCache = {};
+
+    return function(locale) {
+        if(!(locale in numeralsMapCache)) {
+            if(formatNumber(0) === '0') {
+                numeralsMapCache[locale] = false;
+                return false;
+            }
+            numeralsMapCache[locale] = {};
+            for(var i = 0; i < 10; ++i) {
+                numeralsMapCache[locale][formatNumber(i)] = i;
+            }
+        }
+
+        return numeralsMapCache[locale];
+    };
+}());
+
+var normalizeNumerals = function(dateString) {
+    var alternativeNumeralsMap = getAlternativeNumeralsMap(locale());
+
+    if(!alternativeNumeralsMap) {
+        return dateString;
+    }
+
+    return dateString.split('').map(function(sign) {
+        return sign in alternativeNumeralsMap ? String(alternativeNumeralsMap[sign]) : sign;
+    }).join('');
+};
+
 var removeLeadingZeroes = function(str) {
     return str.replace(/(\D)0+(\d)/g, '$1$2');
 };
@@ -125,11 +160,12 @@ dateLocalization.inject({
         if(dateString && typeof format === 'string' && SIMPLE_FORMATS.indexOf(format.toLowerCase()) > -1) {
             return this._parseDateBySimpleFormat(dateString, format.toLowerCase());
         }
-
         return this.callBase(dateString, format);
     },
 
     _parseDateBySimpleFormat: function(dateString, format) {
+        dateString = normalizeNumerals(dateString);
+
         var formatParts = this.getFormatParts(format);
         var dateParts = dateString
             .split(/\D+/)
@@ -147,7 +183,7 @@ dateLocalization.inject({
         };
         var constructValidDate = function(ampmShift) {
             var parsedDate = constructDate(dateArgs, ampmShift);
-            if(dateStringEquals(this.format(parsedDate, format), dateString)) {
+            if(dateStringEquals(normalizeNumerals(this.format(parsedDate, format)), dateString)) {
                 return parsedDate;
             }
         }.bind(this);
@@ -200,6 +236,8 @@ dateLocalization.inject({
         var utcFormat = objectAssign({}, intlFormats[format.toLowerCase()], { timeZone: 'UTC' });
         var utcDate = new Date(Date.UTC(2001, 2, 4, 5, 6, 7));
         var formattedDate = getIntlFormatter(utcFormat)(utcDate);
+
+        formattedDate = normalizeNumerals(formattedDate);
 
         var formatParts = [
             { name: 'year', value: 1 },
