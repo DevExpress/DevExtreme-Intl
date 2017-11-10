@@ -82,17 +82,44 @@ var getIntlFormat = function(format) {
     return typeof format === 'string' && intlFormats[format.toLowerCase()];
 };
 
+var monthNameStrategies = {
+    standalone: function(monthIndex, monthFormat) {
+        var date = new Date(0, monthIndex, 13, 1);
+        return getIntlFormatter({ month: monthFormat })(date);
+    },
+    format: function(monthIndex, monthFormat) {
+        var date = new Date(0, monthIndex, 13, 1);
+        var dateString = getIntlFormatter({ day: 'numeric', month: monthFormat })(date);
+        var parts = dateString.split(' ');
+
+        if(parts.length === 2) {
+            if(parts[0].indexOf('13') >= 0) {
+                return parts[1];
+            }
+            if(parts[1].indexOf('13') >= 0) {
+                return parts[0];
+            }
+        }
+
+        return monthNameStrategies.standalone(monthIndex, monthFormat);
+    }
+};
+
 dateLocalization.resetInjection();
 dateLocalization.inject({
-    getMonthNames: function(format) {
+    getMonthNames: function(format, type) {
         var intlFormats = {
             wide: 'long',
             abbreviated: 'short',
             narrow: 'narrow'
         };
 
+        var monthFormat = intlFormats[format || 'wide'];
+
+        type = type || 'standalone';
+
         return Array.apply(null, new Array(12)).map(function(_, monthIndex) {
-            return getIntlFormatter({ month: intlFormats[format || 'wide'] })(new Date(0, monthIndex, 2));
+            return monthNameStrategies[type](monthIndex, monthFormat);
         });
     },
 
