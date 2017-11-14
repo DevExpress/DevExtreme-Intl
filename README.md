@@ -13,11 +13,11 @@ Using *Intl* is an alternative to the *Globalize* based mechanism [documented he
 Add a script tag for `devextreme-intl` behind your tag for the `devextreme` script:
 
 ```html
-<script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.js"></script>
+<script src="https://unpkg.com/devextreme-intl@17.2/dist/devextreme-intl.js"></script>
 ```
 or
 ```html
-<script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.min.js"></script>
+<script src="https://unpkg.com/devextreme-intl@17.2/dist/devextreme-intl.min.js"></script>
 ```
 
 See [this example with the relevant script tag in place](/examples/bundled.html).
@@ -43,9 +43,9 @@ See [this example using modules](/examples/modular.html).
 
 ## API
 
-In addition to the [DevExtreme format object structure](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/), formats can be specified which are compatible with the  `options` parameter of the Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
+In addition to the [DevExtreme format object structure](https://js.devexpress.com/Documentation/ApiReference/Common/Object_Structures/format/), formats can be specified which are compatible with the  `options` parameter of the Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
 
-Note that the [DevExtreme format object structure](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/) documentation page refers to special structures supported by *Globalize*. When using *DevExtreme-Intl*, these structures are either unsupported or need to adhere to [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) structural requirements instead.
+Note that the [DevExtreme format object structure](https://js.devexpress.com/Documentation/ApiReference/Common/Object_Structures/format/) documentation page refers to special structures supported by *Globalize*. When using *DevExtreme-Intl*, these structures are either unsupported or need to adhere to [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) structural requirements instead.
 
 Here is an example for the use of Intl formats in DataGrid columns:
 
@@ -64,87 +64,12 @@ $("#datagrid").dxDataGrid({
 
 See [more examples here](/examples).
 
-You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/17_1/Guide/Widgets/Common/UI_Widgets/Localization/).
+You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/Guide/Widgets/Common/UI_Widgets/Localization/).
 
-## Restrictions
+## Known Issues
 
-Date parsing is not supported by the ECMAScript Internationalization API. You can read about the position of the ECMAScript community [here](https://bugs.ecmascript.org/show_bug.cgi?id=770).
-As a result, some minor DevExtreme functionality is restricted.
-
-- If you specify a [displayFormat](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/) widget, any value typed into the editor by a user will not be parsed correctly.
-- If you enable [searchPanel](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDataGrid/Configuration/searchPanel/) for the [DataGrid](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDataGrid/) widget, the search by date columns will not work.
-- If you configure a [format](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/Configuration/columns/#format) for a DataGrid column, any value typed into the editor by a user will not be parsed correctly.
-
-If a widget tries to parse a value in one of these scenarios, you will see this message in the JavaScript console:
-```
-W0012 - Date parsing is invoked while the parser is not defined.
-See: http://js.devexpress.com/error/17_1/W0012
-```
-
-You can specify a custom [parser function](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/#parser) as part of the `displayFormat` or `column.format` configuration objects to overcome this limitation. Here are some examples:
-
-```js
-// Value will be parsed correctly
-$("#datebox").dxDateBox({
-    value: new Date()
-});
-
-// Value will not be parsed correctly
-$("#datebox").dxDateBox({
-    value: new Date(),
-    displayFormat: {
-        year: "numeric",
-        month: "long"
-    }
-});
-
-// Add a custom parser function
-$("#datebox").dxDateBox({
-    value: new Date(),
-    displayFormat: {
-        year: "numeric",
-        month: "long",
-        parser: function(dateString) {
-            // return parsed date if possible
-        }
-    }
-});
-
-// Search and manual data entry will not work for the date column
-$("#datagrid").dxDataGrid({
-    dataSource: dataSource,
-    searchPanel: {
-        visible: true
-    },
-    columns: [{
-        dataField: "OrderDate",
-        format: {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit"
-        }
-    }]
-});
-
-// Add a custom parser function
-$("#datagrid").dxDataGrid({
-    dataSource: dataSource,
-    searchPanel: {
-        visible: true
-    },
-    columns: [{
-        dataField: "OrderDate",
-        format: {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            parser: function(dateString) {
-                // return parsed date if possible
-            }
-        }
-    }]
-});
-```
+* [#33 Date parsing by the 'month' format does not work for the 'zh' locale](/issues/33)
+* [#34 Date parsing by the 'longDate' and 'longDateLongTime' formats does not work for the 'ar' locale](/issues/34)
 
 ## Development
 
