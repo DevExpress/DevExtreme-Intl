@@ -17,6 +17,16 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
         return (new Intl.NumberFormat(localeId)).format(number);
     };
 
+    var localizeDigits = function(string) {
+        return string && string.split('').map(function(sign) {
+            if(/[0-9]/.test(sign)) {
+                return formatNumber(Number(sign));
+            }
+
+            return sign;
+        }).join('');
+    };
+
     QUnit.module('date - ' + localeId, {
         beforeEach: function() {
             locale(localeId);
@@ -126,7 +136,7 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
             { format: 'longdate', intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }},
             { format: 'longdatelongtime', intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }},
             { format: 'longtime', intlFormat: { hour: 'numeric', minute: 'numeric', second: 'numeric' }},
-            { format: 'millisecond', expected: formatNumber(0) + formatNumber(0) + formatNumber(6) },
+            { format: 'millisecond', expected: localizeDigits('006') },
             { format: 'minute', intlFormat: { minute: 'numeric' }},
             { format: 'month', intlFormat: { month: 'long' }},
             { format: 'monthandday', intlFormat: { month: 'long', day: 'numeric' }},
@@ -211,10 +221,10 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
         });
 
         quarterData.forEach(function(data) {
-            testFormat('quarter', data.date, data.expected);
+            testFormat('quarter', data.date, localizeDigits(data.expected));
         });
 
-        testFormat('quarterandyear', quarterandyearData.date, quarterandyearData.expected);
+        testFormat('quarterandyear', quarterandyearData.date, localizeDigits(quarterandyearData.expected));
 
         assert.equal(dateLocalization.format(new Date(2015, 2, 2, 3, 4, 5, 6)), String(new Date(2015, 2, 2, 3, 4, 5)), 'without format');
         assert.notOk(dateLocalization.format(), 'without date');
