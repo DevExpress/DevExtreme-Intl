@@ -6,7 +6,9 @@ require('../src/date');
 
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
-[ 'de', 'en', 'ja', 'ru', 'zh', 'hr', 'ar' ].forEach(function(localeId) {
+var locales = [ 'de', 'en', 'ja', 'ru', 'zh', 'hr', 'ar' ];
+
+locales.forEach(function(localeId) {
     var getIntlFormatter = function(format) {
         return function(date) {
             return (new Intl.DateTimeFormat(localeId, format)).format(date).replace(SYMBOLS_TO_REMOVE_REGEX, '');
@@ -250,10 +252,39 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 4, 22, 15) },
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 18, 56, 56) },
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0) },
-            { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59, 59) }
+            { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59, 59) },
+
+            { format: 'longDate', date: new Date(2016, 10, 17) },
+            { format: 'longDate', date: new Date(2016, 11, 31) },
+            { format: 'longDate', date: new Date(2016, 0, 1) },
+
+            { format: 'longDateLongTime', date: new Date(2016, 11, 31, 4, 44) },
+            { format: 'longDateLongTime', date: new Date(2016, 11, 31, 12, 32) },
+            { format: 'longDateLongTime', date: new Date(2016, 0, 1, 0, 16) },
+            { format: 'longDateLongTime', date: new Date(2016, 0, 1, 12, 48) },
+
+            { format: 'monthAndYear', date: new Date(2016, 9, 1) },
+            { format: 'monthAndDay', date: new Date(currentDate.getFullYear(), 9, 17) },
+
+            { format: 'year', date: new Date(2013, 0, 1) },
+            { format: 'shortyear', date: new Date(2013, 0, 1) },
+            { format: 'month', date: new Date(currentDate.getFullYear(), 9, 1) },
+            { format: 'day', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), 17) },
+            { format: 'hour', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 16) },
+            { format: 'minute', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), currentDate.getHours(), 56) }
         ].forEach(function(config) {
             var format = config.format;
             var date = config.date;
+
+            // https://github.com/DevExpress/DevExtreme-Intl/issues/33
+            if(localeId.substr(0, 2) === 'zh' && format === 'month') {
+                return;
+            }
+
+            // https://github.com/DevExpress/DevExtreme-Intl/issues/34
+            if(localeId.substr(0, 2) === 'ar' && (format === 'longDate' || format === 'longDateLongTime')) {
+                return;
+            }
 
             var formattedDate = dateLocalization.format(date, format);
             var parsedDate = dateLocalization.parse(formattedDate, format);

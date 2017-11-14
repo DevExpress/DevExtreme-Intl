@@ -142,6 +142,22 @@ dateLocalization.inject({
         return result;
     },
 
+    getPeriodNames: function() {
+        var hour12Formatter = getIntlFormatter({ hour: 'numeric', hour12: true, timeZone: 'UTC' });
+
+        return [ 1, 13 ].map(function(hours) {
+            var timeParts = hour12Formatter(new Date(Date.UTC(0, 0, 1, hours))).split('1');
+
+            if(timeParts.length !== 2) {
+                return '';
+            }
+
+            var biggerPart = timeParts[0].length > timeParts[1].length ? timeParts[0] : timeParts[1];
+
+            return biggerPart.trim();
+        });
+    },
+
     format: function(date, format) {
         if(!date) {
             return;
