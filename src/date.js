@@ -55,7 +55,7 @@ var dateStringEquals = function(actual, expected) {
 };
 
 var normalizeMonth = function(text) {
-    return text.replace(' d\u2019', ' de '); //ca
+    return text.replace(' d\u2019', ' de '); // NOTE: For 'ca' locale
 };
 
 var intlFormats = {
@@ -102,7 +102,7 @@ var monthNameStrategies = {
         if(parts.length === 1) {
             return parts[0];
         } else if(parts.length === 2) {
-            return parts[0].length > parts[1].length ? parts[0] : parts[1]; //lt
+            return parts[0].length > parts[1].length ? parts[0] : parts[1]; // NOTE: For 'lt' locale
         }
 
         return monthNameStrategies.standalone(monthIndex, monthFormat);
@@ -150,7 +150,7 @@ dateLocalization.inject({
         var hour12Formatter = getIntlFormatter({ hour: 'numeric', hour12: true, timeZone: 'UTC' });
 
         return [ 1, 13 ].map(function(hours) {
-            var hourNumberText = formatNumber(1); //bn
+            var hourNumberText = formatNumber(1); // NOTE: For 'bn' locale
             var timeParts = hour12Formatter(new Date(Date.UTC(0, 0, 1, hours))).split(hourNumberText);
 
             if(timeParts.length !== 2) {
