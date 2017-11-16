@@ -2,6 +2,7 @@ var objectAssign = require('object-assign');
 var locale = require('devextreme/localization').locale;
 var dateLocalization = require('devextreme/localization').date;
 var firstDayOfWeekData = require('../locale-data/first-day-of-week-data');
+var dxVersion = window.DevExpress && window.DevExpress.VERSION || require('devextreme/core/version');
 
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
@@ -53,6 +54,10 @@ var dateStringEquals = function(actual, expected) {
     return removeLeadingZeroes(actual) === removeLeadingZeroes(expected);
 };
 
+var normalizeMonth = function(text) {
+    return text.replace(' d\u2019', ' de '); //ca
+};
+
 var intlFormats = {
     day: { day: 'numeric' },
     dayofweek: { weekday: 'long' },
@@ -89,16 +94,15 @@ var monthNameStrategies = {
     },
     format: function(monthIndex, monthFormat) {
         var date = new Date(0, monthIndex, 13, 1);
-        var dateString = getIntlFormatter({ day: 'numeric', month: monthFormat })(date);
-        var parts = dateString.split(' ');
+        var dateString = normalizeMonth(getIntlFormatter({ day: 'numeric', month: monthFormat })(date));
+        var parts = dateString.split(' ').filter(function(part) {
+            return part.indexOf('13') < 0;
+        });
 
-        if(parts.length === 2) {
-            if(parts[0].indexOf('13') >= 0) {
-                return parts[1];
-            }
-            if(parts[1].indexOf('13') >= 0) {
-                return parts[0];
-            }
+        if(parts.length === 1) {
+            return parts[0];
+        } else if(parts.length === 2) {
+            return parts[0].length > parts[1].length ? parts[0] : parts[1]; //lt
         }
 
         return monthNameStrategies.standalone(monthIndex, monthFormat);
@@ -146,7 +150,8 @@ dateLocalization.inject({
         var hour12Formatter = getIntlFormatter({ hour: 'numeric', hour12: true, timeZone: 'UTC' });
 
         return [ 1, 13 ].map(function(hours) {
-            var timeParts = hour12Formatter(new Date(Date.UTC(0, 0, 1, hours))).split('1');
+            var hourNumberText = formatNumber(1); //bn
+            var timeParts = hour12Formatter(new Date(Date.UTC(0, 0, 1, hours))).split(hourNumberText);
 
             if(timeParts.length !== 2) {
                 return '';
@@ -184,10 +189,20 @@ dateLocalization.inject({
 
     parse: function(dateString, format) {
         var SIMPLE_FORMATS = ['shortdate', 'shorttime', 'shortdateshorttime', 'longtime'];
-        if(dateString && typeof format === 'string' && SIMPLE_FORMATS.indexOf(format.toLowerCase()) > -1) {
+        if(dxVersion < '17.2.4' && dateString && typeof format === 'string' && SIMPLE_FORMATS.indexOf(format.toLowerCase()) > -1) {
             return this._parseDateBySimpleFormat(dateString, format.toLowerCase());
         }
-        return this.callBase(dateString, format);
+
+        var that = this,
+            formatter;
+
+        if(dxVersion >= '17.2.4' && format && typeof dateString === 'string') {
+            dateString = normalizeMonth(dateString);
+            formatter = function(date) {
+                return normalizeMonth(that.format(date, format));
+            };
+        }
+        return this.callBase(dateString, formatter || format);
     },
 
     _parseDateBySimpleFormat: function(dateString, format) {
