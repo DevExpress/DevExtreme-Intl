@@ -2,7 +2,7 @@ var objectAssign = require('object-assign');
 var locale = require('devextreme/localization').locale;
 var dateLocalization = require('devextreme/localization').date;
 var firstDayOfWeekData = require('../locale-data/first-day-of-week-data');
-var dxVersion = window.DevExpress && window.DevExpress.VERSION || require('devextreme/core/version');
+var dxVersion = require('devextreme/core/version');
 
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
