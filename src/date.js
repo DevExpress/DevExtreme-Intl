@@ -193,13 +193,12 @@ dateLocalization.inject({
             return this._parseDateBySimpleFormat(dateString, format.toLowerCase());
         }
 
-        var that = this,
-            formatter;
+        var formatter;
 
         if(dxVersion >= '17.2.4' && format && typeof dateString === 'string') {
             dateString = normalizeMonth(dateString);
             formatter = function(date) {
-                return normalizeMonth(that.format(date, format));
+                return normalizeMonth(dateLocalization.format(date, format));
             };
         }
         return this.callBase(dateString, formatter || format);
