@@ -14,12 +14,12 @@
     "dist/devextreme-intl.min.js"
   ],
   "peerDependencies": {
-    "devextreme": "16.2.4 - 17.1"
+    "devextreme": "16.2.4 - 17.2"
   },
   "devDependencies": {
-    "devextreme": "16.2.4 - 17.1",
     "cldr-core": "^30.0.2",
     "cldrjs": "^0.3.1",
+    "devextreme": "16.2.4 - 17.2",
     "eslint": "^3.10.2",
     "intl": "^1.2.5",
     "jquery": "^2.0.0 || ^3.0.0",
