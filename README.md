@@ -66,11 +66,6 @@ See [more examples here](/examples).
 
 You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/Guide/Widgets/Common/UI_Widgets/Localization/).
 
-## Known Issues
-
-* [#33 Date parsing by the 'month' format does not work for the 'zh' locale](/issues/33)
-* [#34 Date parsing by the 'longDate' and 'longDateLongTime' formats does not work for the 'ar' locale](/issues/34)
-
 ## Development
 
 ### Install external development dependencies
