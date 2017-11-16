@@ -89,8 +89,16 @@ var getIntlFormat = function(format) {
 
 var monthNameStrategies = {
     standalone: function(monthIndex, monthFormat) {
-        var date = new Date(0, monthIndex, 13, 1);
-        return getIntlFormatter({ month: monthFormat })(date);
+        var date = new Date(1999, monthIndex, 13, 1);
+        var dateString = getIntlFormatter({ month: monthFormat })(date);
+        var dateStringWithYear = getIntlFormatter({ month: monthFormat, year: 'numeric' })(date);
+
+        // Note: For 'el' locale
+        if(dateStringWithYear.indexOf(dateString) < 0) {
+            dateString = dateStringWithYear.replace('1999', '').trim();
+        }
+
+        return dateString;
     },
     format: function(monthIndex, monthFormat) {
         var date = new Date(0, monthIndex, 13, 1);
