@@ -34,7 +34,8 @@ module.exports = {
     },
     externals: {
         'devextreme/core/config': { root: [ 'DevExpress', 'config' ], amd: 'devextreme/core/config', commonjs2: 'devextreme/core/config' },
-        'devextreme/localization': { root: [ 'DevExpress', 'localization' ], amd: 'devextreme/localization', commonjs2: 'devextreme/localization' }
+        'devextreme/localization': { root: [ 'DevExpress', 'localization' ], amd: 'devextreme/localization', commonjs2: 'devextreme/localization' },
+        'devextreme/core/version': { root: [ 'DevExpress', 'VERSION' ], amd: 'devextreme/core/version', commonjs2: 'devextreme/core/version' }
     },
     plugins: plugins,
     devtool: argv.dev ? 'eval' : null,

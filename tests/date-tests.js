@@ -8,7 +8,7 @@ require('../src/date');
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
 var locales = [ 'de', 'en', 'ja', 'ru' ];
-if(dxVersion > '17.3') {
+if(dxVersion >= '17.2.3') {
     Array.prototype.push.apply(locales, [ 'zh', 'hr', 'ar' ]);
 }
 
@@ -259,7 +259,7 @@ locales.forEach(function(localeId) {
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59, 59) },
         ];
 
-        if(dxVersion > '17.3') {
+        if(dxVersion >= '17.2.3') {
             Array.prototype.push.apply(testData, [
                 { format: 'longDate', date: new Date(2016, 10, 17) },
                 { format: 'longDate', date: new Date(2016, 11, 31) },
