@@ -13,11 +13,11 @@ Using *Intl* is an alternative to the *Globalize* based mechanism [documented he
 Add a script tag for `devextreme-intl` behind your tag for the `devextreme` script:
 
 ```html
-<script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.js"></script>
+<script src="https://unpkg.com/devextreme-intl@17.2/dist/devextreme-intl.js"></script>
 ```
 or
 ```html
-<script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.min.js"></script>
+<script src="https://unpkg.com/devextreme-intl@17.2/dist/devextreme-intl.min.js"></script>
 ```
 
 See [this example with the relevant script tag in place](/examples/bundled.html).
@@ -43,9 +43,9 @@ See [this example using modules](/examples/modular.html).
 
 ## API
 
-In addition to the [DevExtreme format object structure](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/), formats can be specified which are compatible with the  `options` parameter of the Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
+In addition to the [DevExtreme format object structure](https://js.devexpress.com/Documentation/ApiReference/Common/Object_Structures/format/), formats can be specified which are compatible with the  `options` parameter of the Intl [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#Parameters) and [DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters).
 
-Note that the [DevExtreme format object structure](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/) documentation page refers to special structures supported by *Globalize*. When using *DevExtreme-Intl*, these structures are either unsupported or need to adhere to [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) structural requirements instead.
+Note that the [DevExtreme format object structure](https://js.devexpress.com/Documentation/ApiReference/Common/Object_Structures/format/) documentation page refers to special structures supported by *Globalize*. When using *DevExtreme-Intl*, these structures are either unsupported or need to adhere to [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) structural requirements instead.
 
 Here is an example for the use of Intl formats in DataGrid columns:
 
@@ -64,9 +64,11 @@ $("#datagrid").dxDataGrid({
 
 See [more examples here](/examples).
 
-You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/17_1/Guide/Widgets/Common/UI_Widgets/Localization/).
+You can find full documentation of the localization API in the [DevExtreme documentation](https://js.devexpress.com/Documentation/Guide/Widgets/Common/UI_Widgets/Localization/).
 
 ## Restrictions
+
+**NOTE**: Starting with version 17.2, these restrictions are not relevant.
 
 Date parsing is not supported by the ECMAScript Internationalization API. You can read about the position of the ECMAScript community [here](https://bugs.ecmascript.org/show_bug.cgi?id=770).
 As a result, some minor DevExtreme functionality is restricted.

@@ -1,12 +1,18 @@
 var QUnit = require('qunitjs');
 var locale = require('devextreme/localization').locale;
 var dateLocalization = require('devextreme/localization/date');
+var dxVersion = require('devextreme/core/version');
 
 require('../src/date');
 
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
-[ 'de', 'en', 'ja', 'ru', 'zh', 'hr', 'ar' ].forEach(function(localeId) {
+var locales = [ 'de', 'en', 'ja', 'ru' ];
+if(dxVersion >= '17.2.3') {
+    Array.prototype.push.apply(locales, [ 'zh', 'hr', 'ar' ]);
+}
+
+locales.forEach(function(localeId) {
     var getIntlFormatter = function(format) {
         return function(date) {
             return (new Intl.DateTimeFormat(localeId, format)).format(date).replace(SYMBOLS_TO_REMOVE_REGEX, '');
@@ -15,6 +21,16 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
     var formatNumber = function(number) {
         return (new Intl.NumberFormat(localeId)).format(number);
+    };
+
+    var localizeDigits = function(string) {
+        return string && string.split('').map(function(sign) {
+            if(/[0-9]/.test(sign)) {
+                return formatNumber(Number(sign));
+            }
+
+            return sign;
+        }).join('');
     };
 
     QUnit.module('date - ' + localeId, {
@@ -126,7 +142,7 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
             { format: 'longdate', intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }},
             { format: 'longdatelongtime', intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }},
             { format: 'longtime', intlFormat: { hour: 'numeric', minute: 'numeric', second: 'numeric' }},
-            { format: 'millisecond', expected: formatNumber(0) + formatNumber(0) + formatNumber(6) },
+            { format: 'millisecond', expected: localizeDigits('006') },
             { format: 'minute', intlFormat: { minute: 'numeric' }},
             { format: 'month', intlFormat: { month: 'long' }},
             { format: 'monthandday', intlFormat: { month: 'long', day: 'numeric' }},
@@ -211,10 +227,10 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
         });
 
         quarterData.forEach(function(data) {
-            testFormat('quarter', data.date, data.expected);
+            testFormat('quarter', data.date, localizeDigits(data.expected));
         });
 
-        testFormat('quarterandyear', quarterandyearData.date, quarterandyearData.expected);
+        testFormat('quarterandyear', quarterandyearData.date, localizeDigits(quarterandyearData.expected));
 
         assert.equal(dateLocalization.format(new Date(2015, 2, 2, 3, 4, 5, 6)), String(new Date(2015, 2, 2, 3, 4, 5)), 'without format');
         assert.notOk(dateLocalization.format(), 'without date');
@@ -222,7 +238,7 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
     QUnit.test('parse', function(assert) {
         var currentDate = new Date();
-        [
+        var testData = [
             { format: 'shortDate', date: new Date(2016, 10, 17) },
             { format: 'shortDate', date: new Date(2016, 11, 31) },
             { format: 'shortDate', date: new Date(2016, 0, 1) },
@@ -240,10 +256,45 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 4, 22, 15) },
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 18, 56, 56) },
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0) },
-            { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59, 59) }
-        ].forEach(function(config) {
+            { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59, 59) },
+        ];
+
+        if(dxVersion >= '17.2.3') {
+            Array.prototype.push.apply(testData, [
+                { format: 'longDate', date: new Date(2016, 10, 17) },
+                { format: 'longDate', date: new Date(2016, 11, 31) },
+                { format: 'longDate', date: new Date(2016, 0, 1) },
+
+                { format: 'longDateLongTime', date: new Date(2016, 11, 31, 4, 44) },
+                { format: 'longDateLongTime', date: new Date(2016, 11, 31, 12, 32) },
+                { format: 'longDateLongTime', date: new Date(2016, 0, 1, 0, 16) },
+                { format: 'longDateLongTime', date: new Date(2016, 0, 1, 12, 48) },
+
+                { format: 'monthAndYear', date: new Date(2016, 9, 1) },
+                { format: 'monthAndDay', date: new Date(currentDate.getFullYear(), 9, 17) },
+
+                { format: 'year', date: new Date(2013, 0, 1) },
+                { format: 'shortyear', date: new Date(2013, 0, 1) },
+                { format: 'month', date: new Date(currentDate.getFullYear(), 9, 1) },
+                { format: 'day', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), 17) },
+                { format: 'hour', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 16) },
+                { format: 'minute', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), currentDate.getHours(), 56) }
+            ]);
+        }
+
+        testData.forEach(function(config) {
             var format = config.format;
             var date = config.date;
+
+            // https://github.com/DevExpress/DevExtreme-Intl/issues/33
+            if(localeId.substr(0, 2) === 'zh' && format === 'month') {
+                return;
+            }
+
+            // https://github.com/DevExpress/DevExtreme-Intl/issues/34
+            if(localeId.substr(0, 2) === 'ar' && (format === 'longDate' || format === 'longDateLongTime')) {
+                return;
+            }
 
             var formattedDate = dateLocalization.format(date, format);
             var parsedDate = dateLocalization.parse(formattedDate, format);
