@@ -68,7 +68,7 @@ You can find full documentation of the localization API in the [DevExtreme docum
 
 ## Restrictions
 
-**NOTE**: Starting with version 17.2, these restrictions are not relevant.
+**NOTE: Starting with version 17.2, these restrictions are not relevant.**
 
 Date parsing is not supported by the ECMAScript Internationalization API. You can read about the position of the ECMAScript community [here](https://bugs.ecmascript.org/show_bug.cgi?id=770).
 As a result, some minor DevExtreme functionality is restricted.
