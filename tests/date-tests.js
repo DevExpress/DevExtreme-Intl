@@ -5,11 +5,19 @@ var dxVersion = require('devextreme/core/version');
 
 require('../src/date');
 
+if(Intl.__disableRegExpRestore) {
+    Intl.__disableRegExpRestore();
+}
+
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
 var locales = [ 'de', 'en', 'ja', 'ru' ];
 if(dxVersion >= '17.2.3') {
-    Array.prototype.push.apply(locales, [ 'zh', 'hr', 'ar' ]);
+    Array.prototype.push.apply(locales, [ 'zh', 'ar', 'hr' ]);
+}
+
+if(dxVersion >= '17.2.4') {
+    Array.prototype.push.apply(locales, [ 'el', 'ca' ]);
 }
 
 locales.forEach(function(localeId) {
@@ -67,7 +75,9 @@ locales.forEach(function(localeId) {
             ru: 'ноября',
             zh: '十一月',
             hr: 'studenoga',
-            ar: 'نوفمبر'
+            ar: 'نوفمبر',
+            el: 'Νοεμβρίου',
+            ca: 'novembre'
         };
 
         assert.equal(dateLocalization.getMonthNames('wide', 'format')[10], expected[localeId], 'Array of non-standalone month names');
@@ -287,12 +297,16 @@ locales.forEach(function(localeId) {
             var date = config.date;
 
             // https://github.com/DevExpress/DevExtreme-Intl/issues/33
-            if(localeId.substr(0, 2) === 'zh' && format === 'month') {
+            if(dxVersion < '17.2.4' && localeId.substr(0, 2) === 'zh' && format === 'month') {
                 return;
             }
 
             // https://github.com/DevExpress/DevExtreme-Intl/issues/34
-            if(localeId.substr(0, 2) === 'ar' && (format === 'longDate' || format === 'longDateLongTime')) {
+            if(dxVersion < '17.2.4' && localeId.substr(0, 2) === 'ar' && (format === 'longDate' || format === 'longDateLongTime')) {
+                return;
+            }
+
+            if(localeId.substr(0, 2) === 'el' && format === 'monthAndYear') {
                 return;
             }
 
@@ -342,7 +356,7 @@ locales.forEach(function(localeId) {
 
     QUnit.test('firstDayOfWeekIndex', function(assert) {
         var expectedValues = {
-            de: 1, en: 0, ja: 0, ru: 1, zh: 0, hr: 1, ar: 6
+            de: 1, en: 0, ja: 0, ru: 1, zh: 0, hr: 1, ar: 6, el: 1, ca: 1
         };
         assert.equal(dateLocalization.firstDayOfWeekIndex(), expectedValues[localeId]);
     });
