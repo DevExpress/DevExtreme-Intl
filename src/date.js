@@ -55,7 +55,7 @@ var dateStringEquals = function(actual, expected) {
 };
 
 var normalizeMonth = function(text) {
-    return text.replace(' d\u2019', ' de '); // NOTE: For 'ca' locale
+    return text.replace('d\u2019', 'de '); // NOTE: For 'ca' locale
 };
 
 var intlFormats = {
@@ -91,12 +91,6 @@ var monthNameStrategies = {
     standalone: function(monthIndex, monthFormat) {
         var date = new Date(1999, monthIndex, 13, 1);
         var dateString = getIntlFormatter({ month: monthFormat })(date);
-        var dateStringWithYear = getIntlFormatter({ month: monthFormat, year: 'numeric' })(date);
-
-        // Note: For 'el' locale
-        if(dateStringWithYear.indexOf(dateString) < 0) {
-            dateString = dateStringWithYear.replace('1999', '').trim();
-        }
 
         return dateString;
     },
