@@ -148,12 +148,12 @@ locales.forEach(function(localeId) {
         var formats = [
             { format: 'day', intlFormat: { day: 'numeric' }},
             { format: 'dayofweek', intlFormat: { weekday: 'long' }},
-            { format: 'hour', intlFormat: { hour: 'numeric', hour12: false }},
+            { format: 'hour', expected: localizeDigits('13')},
             { format: 'longdate', intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }},
             { format: 'longdatelongtime', intlFormat: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }},
             { format: 'longtime', intlFormat: { hour: 'numeric', minute: 'numeric', second: 'numeric' }},
             { format: 'millisecond', expected: localizeDigits('006') },
-            { format: 'minute', intlFormat: { minute: 'numeric' }},
+            { format: 'minute', expected: localizeDigits('04')},
             { format: 'month', intlFormat: { month: 'long' }},
             { format: 'monthandday', intlFormat: { month: 'long', day: 'numeric' }},
             { format: 'monthandyear', intlFormat: { year: 'numeric', month: 'long' }},
@@ -386,3 +386,39 @@ QUnit.test('formatted value should not contain &lrm & &rlm symbols', function(as
     }
 });
 
+// Workaroud for the MS Edge and IE bug https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/11907541/
+QUnit.test('Format by `hour` and `minute` shortcuts in IE and Edge', function(assert) {
+    var originalDateTimeFormatter = Intl.DateTimeFormat;
+
+    var testData = {
+        hour: {
+            wrongFormat: { hour: 'numeric', hour12: false, minute: 'numeric' },
+            expected: '01'
+        },
+        minute: {
+            wrongFormat: { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric' },
+            expected: '02'
+        },
+    };
+
+    var emulationFormat;
+    var wronBrowserBehaviorEmulator = function() {
+        return {
+            format: function(date) {
+                return new originalDateTimeFormatter('en', emulationFormat).format(date);
+            }
+        };
+    };
+
+    try {
+        Intl.DateTimeFormat = wronBrowserBehaviorEmulator;
+
+        for(var format in testData) {
+            emulationFormat = testData[format].wrongFormat;
+            assert.equal(dateLocalization.format(new Date(2000, 0, 1, 1, 2), format), testData[format].expected, 'Format: ' + format);
+
+        }
+    } finally {
+        Intl.DateTimeFormat = originalDateTimeFormatter;
+    }
+});
