@@ -61,11 +61,9 @@ var normalizeMonth = function(text) {
 var intlFormats = {
     day: { day: 'numeric' },
     dayofweek: { weekday: 'long' },
-    hour: { hour: 'numeric', hour12: false },
     longdate: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
     longdatelongtime: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' },
     longtime: { hour: 'numeric', minute: 'numeric', second: 'numeric' },
-    minute: { minute: 'numeric' },
     month: { month: 'long' },
     monthandday: { month: 'long', day: 'numeric' },
     monthandyear: { year: 'numeric', month: 'long' },
