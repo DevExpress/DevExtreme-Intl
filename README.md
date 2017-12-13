@@ -15,7 +15,9 @@ Add a script tag for `devextreme-intl` behind your tag for the `devextreme` scri
 ```html
 <script src="https://unpkg.com/devextreme-intl@17.2/dist/devextreme-intl.js"></script>
 ```
+
 or
+
 ```html
 <script src="https://unpkg.com/devextreme-intl@17.2/dist/devextreme-intl.min.js"></script>
 ```
@@ -33,7 +35,6 @@ See [this example with the relevant script tag in place](/examples/bundled.html)
     ```js
     import 'devextreme-intl';
     ```
-
 
 See [this example using modules](/examples/modular.html).
 
@@ -73,17 +74,16 @@ You can find full documentation of the localization API in the [DevExtreme docum
 Date parsing is not supported by the ECMAScript Internationalization API. You can read about the position of the ECMAScript community [here](https://bugs.ecmascript.org/show_bug.cgi?id=770).
 As a result, some minor DevExtreme functionality is restricted.
 
-- If you specify a [displayFormat](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDateBox/) widget, any value typed into the editor by a user will not be parsed correctly.
-- If you enable [searchPanel](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDataGrid/Configuration/searchPanel/) for the [DataGrid](https://js.devexpress.com/Documentation/17_1/ApiReference/UI_Widgets/dxDataGrid/) widget, the search by date columns will not work.
+- If you specify a [displayFormat](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDateBox/Configuration/#displayFormat) for the  [DateBox](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDateBox/) widget, any value typed into the editor by a user will not be parsed correctly.
+- If you enable [searchPanel](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/Configuration/searchPanel/) for the [DataGrid](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/) widget, the search by date columns will not work.
 - If you configure a [format](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/Configuration/columns/#format) for a DataGrid column, any value typed into the editor by a user will not be parsed correctly.
 
 If a widget tries to parse a value in one of these scenarios, you will see this message in the JavaScript console:
-```
-W0012 - Date parsing is invoked while the parser is not defined.
-See: http://js.devexpress.com/error/17_1/W0012
-```
 
-You can specify a custom [parser function](https://js.devexpress.com/Documentation/17_1/ApiReference/Common/Object_Structures/format/#parser) as part of the `displayFormat` or `column.format` configuration objects to overcome this limitation. Here are some examples:
+> W0012 - Date parsing is invoked while the parser is not defined.
+> See: <http://js.devexpress.com/error/17_2/W0012>
+
+You can specify a custom [parser function](https://js.devexpress.com/Documentation/ApiReference/Common/Object_Structures/format/#parser) as part of the `displayFormat` or `column.format` configuration objects to overcome this limitation. Here are some examples:
 
 ```js
 // Value will be parsed correctly
@@ -173,6 +173,6 @@ Familiarize yourself with the
 
 ## Support & Feedback
 
-* For support and feedback on general Intl questions, use [MDN Feedback](https://developer.mozilla.org/ru/docs/MDN/Feedback)
-* For questions regarding DevExtreme libraries and JavaScript APIs, use the [DevExpress Support Center](https://www.devexpress.com/Support/Center)
-* For DevExtreme Intl integration bugs, questions and suggestions, use the [GitHub issue tracker](https://github.com/DevExpress/DevExtreme-Intl/issues)
+- For support and feedback on general Intl questions, use [MDN Feedback](https://developer.mozilla.org/ru/docs/MDN/Feedback)
+- For questions regarding DevExtreme libraries and JavaScript APIs, use the [DevExpress Support Center](https://www.devexpress.com/Support/Center)
+- For DevExtreme Intl integration bugs, questions and suggestions, use the [GitHub issue tracker](https://github.com/DevExpress/DevExtreme-Intl/issues)
