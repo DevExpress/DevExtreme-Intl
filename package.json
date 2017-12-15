@@ -17,7 +17,7 @@
     "devextreme": "16.2.4 - 17.2"
   },
   "devDependencies": {
-    "cldr-core": ">30.0.2",
+    "cldr-core": "latest",
     "cldrjs": "^0.3.1",
     "devextreme": "16.2.4 - 17.2",
     "eslint": "^3.10.2",
