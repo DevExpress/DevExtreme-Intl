@@ -1,12 +1,27 @@
 var QUnit = require('qunitjs');
 var locale = require('devextreme/localization').locale;
 var numberLocalization = require('devextreme/localization/number');
+var dxVersion = require('devextreme/core/version');
 
 require('../src/number');
 
-[ 'de', 'en', 'ja', 'ru' ].forEach(function(localeId) {
+var locales = [ 'de', 'en', 'ja', 'ru' ];
+if(dxVersion >= '17.2.3') {
+    Array.prototype.push.apply(locales, [ 'ar' ]);
+}
+locales.forEach(function(localeId) {
     var getIntlFormatter = function(format) {
         return (new Intl.NumberFormat(localeId, format)).format;
+    };
+
+    var localizeDigits = function(string) {
+        return string && string.split('').map(function(sign) {
+            if(/[0-9]/.test(sign)) {
+                return getIntlFormatter()(Number(sign));
+            }
+
+            return sign;
+        }).join('');
     };
 
     QUnit.module('number - ' + localeId, {
@@ -19,9 +34,16 @@ require('../src/number');
     });
 
     QUnit.test('format', function(assert) {
-        var separator = localeId === 'de' || localeId === 'ru' ? ',' : '.';
+        var separators = {
+            de: ',',
+            ru: ',',
+            ar: '٫',
+            default: '.'
+        };
+        var separator = separators[localeId] || separators.default;
+
         function getLocalizedFixedNumber(integerPart, fractionPart) {
-            return integerPart + separator + fractionPart;
+            return localizeDigits(integerPart + separator + fractionPart);
         }
         var assertData = [
             {
@@ -34,17 +56,17 @@ require('../src/number');
                     useGrouping: false
                 }
             },
-            { value: 437, format: { type: 'decimal' }, expected: '437' },
-            { value: 437, format: { type: 'decimal', precision: 5 }, expected: '00437' },
-            { value: 2, format: { type: 'decimal', precision: 2 }, expected: '02' },
-            { value: 12, format: { type: 'decimal', precision: 2 }, expected: '12' },
-            { value: 2, format: { type: 'decimal', precision: 3 }, expected: '002' },
-            { value: 12, format: { type: 'decimal', precision: 3 }, expected: '012' },
-            { value: 123, format: { type: 'decimal', precision: 3 }, expected: '123' },
+            { value: 437, format: { type: 'decimal' }, expected: localizeDigits('437') },
+            { value: 437, format: { type: 'decimal', precision: 5 }, expected: localizeDigits('00437') },
+            { value: 2, format: { type: 'decimal', precision: 2 }, expected: localizeDigits('02') },
+            { value: 12, format: { type: 'decimal', precision: 2 }, expected: localizeDigits('12') },
+            { value: 2, format: { type: 'decimal', precision: 3 }, expected: localizeDigits('002') },
+            { value: 12, format: { type: 'decimal', precision: 3 }, expected: localizeDigits('012') },
+            { value: 123, format: { type: 'decimal', precision: 3 }, expected: localizeDigits('123') },
 
-            { value: 12.345, format: 'fixedPoint', expected: '12' },
-            { value: 12.345, format: { type: 'fixedPoint' }, expected: '12' },
-            { value: 1, format: { type: 'fixedPoint', precision: null }, expected: '1' },
+            { value: 12.345, format: 'fixedPoint', expected: localizeDigits('12') },
+            { value: 12.345, format: { type: 'fixedPoint' }, expected: localizeDigits('12') },
+            { value: 1, format: { type: 'fixedPoint', precision: null }, expected: localizeDigits('1') },
             { value: 1.2, format: { type: 'fixedPoint', precision: null }, expected: getLocalizedFixedNumber(1, 2) },
             { value: 1.22, format: { type: 'fixedPoint', precision: null }, expected: getLocalizedFixedNumber(1, 22) },
             { value: 1.222, format: { type: 'fixedPoint', precision: null }, expected: getLocalizedFixedNumber(1, 222) },
