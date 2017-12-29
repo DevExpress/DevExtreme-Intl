@@ -91,6 +91,10 @@ numberLocalization.inject({
         var isExponentialRegexp = /^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)+$/,
             legitDecimalSeparator = '.';
 
+        if(this.convertDigits) {
+            text = this.convertDigits(text, true);
+        }
+
         if(isExponentialRegexp.test(text)) {
             return text;
         }
