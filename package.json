@@ -22,7 +22,7 @@
     "devextreme": "16.2.4 - 17.2",
     "eslint": "^3.10.2",
     "intl": "^1.2.5",
-    "jquery": "^2.0.0 || ^3.0.0",
+    "jquery": "^3.0.0",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
     "karma-junit-reporter": "^1.1.0",
