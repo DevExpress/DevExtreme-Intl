@@ -195,7 +195,7 @@ dateLocalization.inject({
 
         var formatter;
 
-        if(dxVersion >= '17.2.4' && format && typeof dateString === 'string') {
+        if(dxVersion >= '17.2.4' && format && !format.parser && typeof dateString === 'string') {
             dateString = normalizeMonth(dateString);
             formatter = function(date) {
                 return normalizeMonth(dateLocalization.format(date, format));
