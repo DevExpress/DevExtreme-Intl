@@ -328,6 +328,17 @@ locales.forEach(function(localeId) {
         assert.equal(dateLocalization.parse('', 'shortDate'), undefined);
     });
 
+    QUnit.test('parse by a function', function(assert) {
+        var expectedDate = new Date(2018, 1, 1);
+        var customDateString = 'Custom date string';
+        var customParser = function(text) {
+            if(text === customDateString) {
+                return expectedDate;
+            }
+        };
+        assert.equal(dateLocalization.parse(customDateString, { parser: customParser }).toString(), expectedDate.toString());
+    });
+
     QUnit.test('DevExtreme format uses default locale options', function(assert) {
         var date = new Date();
 
