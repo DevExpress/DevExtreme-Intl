@@ -176,7 +176,11 @@ dateLocalization.inject({
 
         var intlFormat = getIntlFormat(format);
         if(intlFormat) {
-            return getIntlFormatter(intlFormat)(date);
+            // Workaround for https://github.com/andyearnshaw/Intl.js/issues/304
+            var utcDate = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
+            intlFormat.timeZone = 'UTC';
+
+            return getIntlFormatter(intlFormat)(utcDate);
         }
 
         var formatType = typeof format;
