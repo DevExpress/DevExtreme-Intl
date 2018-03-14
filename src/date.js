@@ -175,11 +175,14 @@ dateLocalization.inject({
         format = format.type || format;
 
         var intlFormat = getIntlFormat(format);
-        if(intlFormat) {
-            // Workaround for https://github.com/andyearnshaw/Intl.js/issues/304
-            var utcDate = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
-            intlFormat.timeZone = 'UTC';
 
+        // There are differences between date formatting in different browsers. All browsers create date by 'new Date()'
+        // with current timezone offset for all date. Chrome and Firefox format this date with an offset for the created date,
+        // but IE and Edge use the current offset.
+        var utcDate = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
+
+        if(intlFormat) {
+            intlFormat.timeZone = 'UTC';
             return getIntlFormatter(intlFormat)(utcDate);
         }
 
@@ -188,7 +191,12 @@ dateLocalization.inject({
             return this.callBase.apply(this, arguments);
         }
 
-        return getIntlFormatter(format)(date);
+        if(format.timeZoneName) {
+            return getIntlFormatter(format)(date);
+        } else {
+            format.timeZone = 'UTC';
+            return getIntlFormatter(format)(utcDate);
+        }
     },
 
     parse: function(dateString, format) {
