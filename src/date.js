@@ -8,8 +8,21 @@ var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
 var getIntlFormatter = function(format) {
     return function(date) {
-        return (new Intl.DateTimeFormat(locale(), format)).format(date).replace(SYMBOLS_TO_REMOVE_REGEX, '');
+        // Intl in some browsers formates dates with timezone offset which was at the moment for this date.
+        // But the method "new Date" creates date using current offset. So, we decided to format dates in the UTC timezone.
+        if(!format.timeZoneName) {
+            var utcDate = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()),
+                utcFormat = objectAssign({ timeZone: 'UTC' }, format);
+
+            return formatDateTime(utcDate, utcFormat);
+        }
+
+        return formatDateTime(date, format);
     };
+};
+
+var formatDateTime = function(date, format) {
+    return (new Intl.DateTimeFormat(locale(), format)).format(date).replace(SYMBOLS_TO_REMOVE_REGEX, '');
 };
 
 var formatNumber = function(number) {
@@ -137,7 +150,7 @@ dateLocalization.inject({
 
         var getIntlDayNames = function(format) {
             return Array.apply(null, new Array(7)).map(function(_, dayIndex) {
-                return getIntlFormatter({ weekday: format, timeZone: 'UTC' })(new Date(Date.UTC(0, 0, dayIndex)));
+                return getIntlFormatter({ weekday: format })(new Date(0, 0, dayIndex));
             });
         };
 
@@ -147,11 +160,11 @@ dateLocalization.inject({
     },
 
     getPeriodNames: function() {
-        var hour12Formatter = getIntlFormatter({ hour: 'numeric', hour12: true, timeZone: 'UTC' });
+        var hour12Formatter = getIntlFormatter({ hour: 'numeric', hour12: true });
 
         return [ 1, 13 ].map(function(hours) {
             var hourNumberText = formatNumber(1); // NOTE: For 'bn' locale
-            var timeParts = hour12Formatter(new Date(Date.UTC(0, 0, 1, hours))).split(hourNumberText);
+            var timeParts = hour12Formatter(new Date(0, 0, 1, hours)).split(hourNumberText);
 
             if(timeParts.length !== 2) {
                 return '';
@@ -176,14 +189,8 @@ dateLocalization.inject({
 
         var intlFormat = getIntlFormat(format);
 
-        // There are differences between date formatting in different browsers. All browsers create date by 'new Date()'
-        // with current timezone offset for all date. Chrome and Firefox format this date with an offset for the created date,
-        // but IE and Edge use the current offset.
-        var utcDate = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
-
         if(intlFormat) {
-            intlFormat.timeZone = 'UTC';
-            return getIntlFormatter(intlFormat)(utcDate);
+            return getIntlFormatter(intlFormat)(date);
         }
 
         var formatType = typeof format;
@@ -191,12 +198,7 @@ dateLocalization.inject({
             return this.callBase.apply(this, arguments);
         }
 
-        if(format.timeZoneName) {
-            return getIntlFormatter(format)(date);
-        } else {
-            format.timeZone = 'UTC';
-            return getIntlFormatter(format)(utcDate);
-        }
+        return getIntlFormatter(format)(date);
     },
 
     parse: function(dateString, format) {
@@ -286,9 +288,9 @@ dateLocalization.inject({
     },
 
     getFormatParts: function(format) {
-        var utcFormat = objectAssign({}, intlFormats[format.toLowerCase()], { timeZone: 'UTC' });
-        var utcDate = new Date(Date.UTC(2001, 2, 4, 5, 6, 7));
-        var formattedDate = getIntlFormatter(utcFormat)(utcDate);
+        var intlFormat = objectAssign({}, intlFormats[format.toLowerCase()]);
+        var date = new Date(2001, 2, 4, 5, 6, 7);
+        var formattedDate = getIntlFormatter(intlFormat)(date);
 
         formattedDate = normalizeNumerals(formattedDate);
 
