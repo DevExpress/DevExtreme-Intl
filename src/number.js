@@ -83,6 +83,10 @@ numberLocalization.inject({
             return format.parser(text);
         }
 
+        if(text.length > 15) {
+            return NaN;
+        }
+
         text = this._normalizeNumber(text, format);
 
         return parseFloat(text);

@@ -169,6 +169,10 @@ locales.forEach(function(localeId) {
         assert.equal(numberLocalization.parse('!437', { parser: function(text) { return Number(text.substr(1)); } }), 437);
     });
 
+    QUnit.test('parse long string', function(assert) {
+        assert.ok(isNaN(numberLocalization.parse('1111111111111111111111111111111111111')));
+    });
+
     QUnit.module('currency', {
         beforeEach: function() {
             locale('en');
