@@ -74,40 +74,6 @@ numberLocalization.inject({
 
         return this.callBase.apply(this, arguments);
     },
-    parse: function(text, format) {
-        if(!text) {
-            return;
-        }
-
-        if(format && format.parser) {
-            return format.parser(text);
-        }
-
-        if(text.length > 15) {
-            return NaN;
-        }
-
-        text = this._normalizeNumber(text, format);
-
-        return parseFloat(text);
-    },
-    _normalizeNumber: function(text, format) {
-        var isExponentialRegexp = /^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)+$/,
-            legitDecimalSeparator = '.';
-
-        if(this.convertDigits) {
-            text = this.convertDigits(text, true);
-        }
-
-        if(isExponentialRegexp.test(text)) {
-            return text;
-        }
-
-        var decimalSeparator = this._getDecimalSeparator(format);
-        var cleanUpRegexp = new RegExp('[^0-9\-\\' + decimalSeparator + ']', 'g');
-
-        return text.replace(cleanUpRegexp, '').replace(decimalSeparator, legitDecimalSeparator);
-    },
     _getDecimalSeparator: function(format) {
         return getFormatter(format)(0.1)[1];
     },
