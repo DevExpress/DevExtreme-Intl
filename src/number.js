@@ -75,45 +75,45 @@ numberLocalization.inject({
 
         return this.callBase.apply(this, arguments);
     },
-    parse: function(text, format) {	
+    parse: function(text, format) {
         if(dxVersion >= '17.2.8') {
             return this.callBase.apply(this, arguments);
         }
-        if(!text) {	
-            return;	
-        }	
+        if(!text) {
+            return;
+        }
 
-        if(format && format.parser) {	
-            return format.parser(text);	
-        }	
+        if(format && format.parser) {
+            return format.parser(text);
+        }
 	
-        text = this._normalizeNumber(text, format);	
+        text = this._normalizeNumber(text, format);
 
         if(text.length > 15) {
             return NaN;
         }
 
-        return parseFloat(text);	
-    },	
-    _normalizeNumber: function(text, format) {	
-        var isExponentialRegexp = /^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)+$/,	
-            legitDecimalSeparator = '.';	
+        return parseFloat(text);
+    },
+    _normalizeNumber: function(text, format) {
+        var isExponentialRegexp = /^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)+$/,
+            legitDecimalSeparator = '.';
 	
-        if(this.convertDigits) {	
-            text = this.convertDigits(text, true);	
-        }	
-	
-        if(isExponentialRegexp.test(text)) {	
-            return text;	
-        }	
+        if(this.convertDigits) {
+            text = this.convertDigits(text, true);
+        }
 
-        var decimalSeparator = this._getDecimalSeparator(format);	
-        var cleanUpRegexp = new RegExp('[^0-9\-\\' + decimalSeparator + ']', 'g');	
+        if(isExponentialRegexp.test(text)) {
+            return text;
+        }
 
-        return text.replace(cleanUpRegexp, '').replace(decimalSeparator, legitDecimalSeparator);	
-    },	
-    _getDecimalSeparator: function(format) {	
-        return getFormatter(format)(0.1)[1];	
+        var decimalSeparator = this._getDecimalSeparator(format);
+        var cleanUpRegexp = new RegExp('[^0-9\-\\' + decimalSeparator + ']', 'g');
+
+        return text.replace(cleanUpRegexp, '').replace(decimalSeparator, legitDecimalSeparator);
+    },
+    _getDecimalSeparator: function(format) {
+        return getFormatter(format)(0.1)[1];
     },
     _getCurrencySymbolInfo: function(currency) {
         var formatter = getCurrencyFormatter(currency);
