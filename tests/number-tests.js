@@ -2,11 +2,12 @@ var QUnit = require('qunitjs');
 var locale = require('devextreme/localization').locale;
 var numberLocalization = require('devextreme/localization/number');
 var dxVersion = require('devextreme/core/version');
+var compareVersions = require('../src/utils').compareVersions;
 
 require('../src/number');
 
 var locales = [ 'de', 'en', 'ja', 'ru' ];
-if(dxVersion >= '17.2.3') {
+if(compareVersions(dxVersion, '17.2.3') >= 0) {
     Array.prototype.push.apply(locales, [ 'ar' ]);
 }
 locales.forEach(function(localeId) {

@@ -3,6 +3,7 @@ var locale = require('devextreme/localization').locale;
 var dateLocalization = require('devextreme/localization').date;
 var firstDayOfWeekData = require('../locale-data/first-day-of-week-data');
 var dxVersion = require('devextreme/core/version');
+var compareVersions = require('./utils').compareVersions;
 
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
@@ -203,13 +204,13 @@ dateLocalization.inject({
 
     parse: function(dateString, format) {
         var SIMPLE_FORMATS = ['shortdate', 'shorttime', 'shortdateshorttime', 'longtime'];
-        if(dxVersion < '17.2.4' && dateString && typeof format === 'string' && SIMPLE_FORMATS.indexOf(format.toLowerCase()) > -1) {
+        if(compareVersions(dxVersion, '17.2.4') === -1 && dateString && typeof format === 'string' && SIMPLE_FORMATS.indexOf(format.toLowerCase()) > -1) {
             return this._parseDateBySimpleFormat(dateString, format.toLowerCase());
         }
 
         var formatter;
 
-        if(dxVersion >= '17.2.4' && format && !format.parser && typeof dateString === 'string') {
+        if(compareVersions(dxVersion, '17.2.4') >= 0 && format && !format.parser && typeof dateString === 'string') {
             dateString = normalizeMonth(dateString);
             formatter = function(date) {
                 return normalizeMonth(dateLocalization.format(date, format));
