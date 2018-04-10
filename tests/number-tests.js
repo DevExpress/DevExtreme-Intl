@@ -2,11 +2,12 @@ var QUnit = require('qunitjs');
 var locale = require('devextreme/localization').locale;
 var numberLocalization = require('devextreme/localization/number');
 var dxVersion = require('devextreme/core/version');
+var compareVersions = require('devextreme/core/utils/version').compare;
 
 require('../src/number');
 
 var locales = [ 'de', 'en', 'ja', 'ru' ];
-if(dxVersion >= '17.2.3') {
+if(compareVersions(dxVersion, '17.2.3') >= 0) {
     Array.prototype.push.apply(locales, [ 'ar' ]);
 }
 locales.forEach(function(localeId) {
@@ -167,6 +168,10 @@ locales.forEach(function(localeId) {
 
     QUnit.test('parse by a function', function(assert) {
         assert.equal(numberLocalization.parse('!437', { parser: function(text) { return Number(text.substr(1)); } }), 437);
+    });
+
+    QUnit.test('parse long string', function(assert) {
+        assert.ok(isNaN(numberLocalization.parse('1111111111111111111111111111111111111')));
     });
 
     QUnit.module('currency', {

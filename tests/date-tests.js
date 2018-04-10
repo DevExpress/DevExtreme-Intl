@@ -2,6 +2,7 @@ var QUnit = require('qunitjs');
 var locale = require('devextreme/localization').locale;
 var dateLocalization = require('devextreme/localization/date');
 var dxVersion = require('devextreme/core/version');
+var compareVersions = require('devextreme/core/utils/version').compare;
 
 require('../src/date');
 
@@ -12,11 +13,11 @@ if(Intl.__disableRegExpRestore) {
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
 var locales = [ 'de', 'en', 'ja', 'ru' ];
-if(dxVersion >= '17.2.3') {
+if(compareVersions(dxVersion, '17.2.3') >= 0) {
     Array.prototype.push.apply(locales, [ 'zh', 'ar', 'hr' ]);
 }
 
-if(dxVersion >= '17.2.4') {
+if(compareVersions(dxVersion, '17.2.4') >= 0) {
     Array.prototype.push.apply(locales, [ 'el', 'ca' ]);
 }
 
@@ -269,7 +270,7 @@ locales.forEach(function(localeId) {
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59, 59) },
         ];
 
-        if(dxVersion >= '17.2.3') {
+        if(compareVersions(dxVersion, '17.2.3') >= 0) {
             Array.prototype.push.apply(testData, [
                 { format: 'longDate', date: new Date(2016, 10, 17) },
                 { format: 'longDate', date: new Date(2016, 11, 31) },
@@ -297,12 +298,12 @@ locales.forEach(function(localeId) {
             var date = config.date;
 
             // https://github.com/DevExpress/DevExtreme-Intl/issues/33
-            if(dxVersion < '17.2.4' && localeId.substr(0, 2) === 'zh' && format === 'month') {
+            if(compareVersions(dxVersion, '17.2.4') === -1 && localeId.substr(0, 2) === 'zh' && format === 'month') {
                 return;
             }
 
             // https://github.com/DevExpress/DevExtreme-Intl/issues/34
-            if(dxVersion < '17.2.4' && localeId.substr(0, 2) === 'ar' && (format === 'longDate' || format === 'longDateLongTime')) {
+            if(compareVersions(dxVersion, '17.2.4') === -1 && localeId.substr(0, 2) === 'ar' && (format === 'longDate' || format === 'longDateLongTime')) {
                 return;
             }
 

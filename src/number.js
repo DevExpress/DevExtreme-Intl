@@ -2,6 +2,8 @@ var objectAssign = require('object-assign');
 var dxConfig = require('devextreme/core/config');
 var locale = require('devextreme/localization').locale;
 var numberLocalization = require('devextreme/localization').number;
+var dxVersion = require('devextreme/core/version');
+var compareVersions = require('devextreme/core/utils/version').compare;
 
 var currencyOptionsCache = {},
     detectCurrencySymbolRegex = /([^\s0]+)?(\s*)0*[.,]*0*(\s*)([^\s0]+)?/,
@@ -75,6 +77,9 @@ numberLocalization.inject({
         return this.callBase.apply(this, arguments);
     },
     parse: function(text, format) {
+        if(compareVersions(dxVersion, '17.2.8') >= 0) {
+            return this.callBase.apply(this, arguments);
+        }
         if(!text) {
             return;
         }
@@ -84,6 +89,10 @@ numberLocalization.inject({
         }
 
         text = this._normalizeNumber(text, format);
+
+        if(text.length > 15) {
+            return NaN;
+        }
 
         return parseFloat(text);
     },
