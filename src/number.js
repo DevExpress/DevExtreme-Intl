@@ -75,7 +75,6 @@ numberLocalization.inject({
 
         return this.callBase.apply(this, arguments);
     },
-
     parse: function(text, format) {	
         if(dxVersion >= '17.2.8') {
             return this.callBase.apply(this, arguments);
@@ -116,7 +115,6 @@ numberLocalization.inject({
     _getDecimalSeparator: function(format) {	
         return getFormatter(format)(0.1)[1];	
     },
-
     _getCurrencySymbolInfo: function(currency) {
         var formatter = getCurrencyFormatter(currency);
         return this._extractCurrencySymbolInfo(formatter.format(0));
