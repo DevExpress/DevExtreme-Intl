@@ -86,7 +86,7 @@ numberLocalization.inject({
         if(format && format.parser) {
             return format.parser(text);
         }
-	
+
         text = this._normalizeNumber(text, format);
 
         if(text.length > 15) {
@@ -98,7 +98,7 @@ numberLocalization.inject({
     _normalizeNumber: function(text, format) {
         var isExponentialRegexp = /^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)+$/,
             legitDecimalSeparator = '.';
-	
+
         if(this.convertDigits) {
             text = this.convertDigits(text, true);
         }
