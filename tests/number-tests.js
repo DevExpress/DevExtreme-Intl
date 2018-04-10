@@ -2,7 +2,7 @@ var QUnit = require('qunitjs');
 var locale = require('devextreme/localization').locale;
 var numberLocalization = require('devextreme/localization/number');
 var dxVersion = require('devextreme/core/version');
-var compareVersions = require('../src/utils').compareVersions;
+var compareVersions = require('devextreme/core/utils/version').compare;
 
 require('../src/number');
 

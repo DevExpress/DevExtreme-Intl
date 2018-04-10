@@ -3,7 +3,7 @@ var locale = require('devextreme/localization').locale;
 var dateLocalization = require('devextreme/localization').date;
 var firstDayOfWeekData = require('../locale-data/first-day-of-week-data');
 var dxVersion = require('devextreme/core/version');
-var compareVersions = require('./utils').compareVersions;
+var compareVersions = require('devextreme/core/utils/version').compare;
 
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
