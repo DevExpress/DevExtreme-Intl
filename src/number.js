@@ -74,9 +74,6 @@ numberLocalization.inject({
 
         return this.callBase.apply(this, arguments);
     },
-    _getDecimalSeparator: function(format) {
-        return getFormatter(format)(0.1)[1];
-    },
     _getCurrencySymbolInfo: function(currency) {
         var formatter = getCurrencyFormatter(currency);
         return this._extractCurrencySymbolInfo(formatter.format(0));
