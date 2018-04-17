@@ -21,3 +21,5 @@ build:
     - npm run test
     - shippable_retry npm install devextreme@17.1 --unsafe-perm
     - npm run test
+    - shippable_retry npm install devextreme@17.2 --unsafe-perm
+    - npm run test
