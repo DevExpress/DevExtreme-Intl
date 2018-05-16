@@ -13,13 +13,13 @@ Using *Intl* is an alternative to the *Globalize* based mechanism [documented he
 Add a script tag for `devextreme-intl` behind your tag for the `devextreme` script:
 
 ```html
-<script src="https://unpkg.com/devextreme-intl@17.2/dist/devextreme-intl.js"></script>
+<script src="https://unpkg.com/devextreme-intl@18.1/dist/devextreme-intl.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://unpkg.com/devextreme-intl@17.2/dist/devextreme-intl.min.js"></script>
+<script src="https://unpkg.com/devextreme-intl@18.1/dist/devextreme-intl.min.js"></script>
 ```
 
 See [this example with the relevant script tag in place](/examples/bundled.html).
@@ -81,7 +81,7 @@ As a result, some minor DevExtreme functionality is restricted.
 If a widget tries to parse a value in one of these scenarios, you will see this message in the JavaScript console:
 
 > W0012 - Date parsing is invoked while the parser is not defined.
-> See: <http://js.devexpress.com/error/17_2/W0012>
+> See: <http://js.devexpress.com/error/18_1/W0012>
 
 You can specify a custom [parser function](https://js.devexpress.com/Documentation/ApiReference/Common/Object_Structures/format/#parser) as part of the `displayFormat` or `column.format` configuration objects to overcome this limitation. Here are some examples:
 
