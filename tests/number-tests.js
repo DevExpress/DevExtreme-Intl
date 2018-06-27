@@ -209,4 +209,8 @@ locales.forEach(function(localeId) {
             }
         }
     });
+
+    QUnit.test('getOpenXmlCurrencyFormat should return default format when currency is undefined', function(assert) {
+        assert.equal(numberLocalization.getOpenXmlCurrencyFormat(undefined), '$#,##0{0}');      
+    });
 });
