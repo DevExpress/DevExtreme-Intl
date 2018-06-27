@@ -179,7 +179,8 @@ numberLocalization.inject({
         return result;
     },
     getOpenXmlCurrencyFormat: function(currency) {
-        var options = this._getCurrencyOptions(currency);
+        var currencyValue = currency || dxConfig().defaultCurrency, 
+            options = this._getCurrencyOptions(currencyValue);
         return this._createOpenXmlCurrencyFormat(options);
     }
 });
