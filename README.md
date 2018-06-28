@@ -81,7 +81,7 @@ As a result, some minor DevExtreme functionality is restricted.
 If a widget tries to parse a value in one of these scenarios, you will see this message in the JavaScript console:
 
 > W0012 - Date parsing is invoked while the parser is not defined.
-> See: <http://js.devexpress.com/error/18_1/W0012>
+> See: <http://js.devexpress.com/error/W0012>
 
 You can specify a custom [parser function](https://js.devexpress.com/Documentation/ApiReference/Common/Object_Structures/format/#parser) as part of the `displayFormat` or `column.format` configuration objects to overcome this limitation. Here are some examples:
 
