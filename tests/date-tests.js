@@ -17,7 +17,7 @@ if(compareVersions(dxVersion, '17.2.3') >= 0) {
     Array.prototype.push.apply(locales, [ 'zh', 'ar', 'hr' ]);
 }
 
-if(compareVersions(dxVersion, '17.2.4') >= 0) {
+if(compareVersions(dxVersion, '17.2.4') >= 0 && compareVersions(dxVersion, '18.1.6') !== 0) {
     Array.prototype.push.apply(locales, [ 'el', 'ca' ]);
 }
 
