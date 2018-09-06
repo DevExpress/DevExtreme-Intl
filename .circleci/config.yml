@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8-browsers
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install packages
+          command: npm install --unsafe-perm
+      - run:
+          name: Run tests with latest DevExtreme
+          command: npm run test
+      - run:
+          name: Install DevExtreme 17.2
+          command: npm install devextreme@17.2 --unsafe-perm
+      - run:
+          name: Run tests with DevExtreme 17.2
+          command: npm run test
+      - run:
+          name: Install DevExtreme 17.1
+          command: npm install devextreme@17.1 --unsafe-perm
+      - run:
+          name: Run tests with DevExtreme 17.1
+          command: npm run test
