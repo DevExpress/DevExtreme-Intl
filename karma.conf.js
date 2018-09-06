@@ -1,8 +1,14 @@
+/* global process */
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 module.exports = function(config) {
     config.set({
-        browsers: ['Chrome'],
+        browsers: ['ChromeHeadless'],
         frameworks: ['qunit'],
         files: [
+            { pattern: 'tests/no-intl-mock.js', watched: false },
+            'node_modules/intl/dist/Intl.min.js',	
+            'node_modules/intl/locale-data/complete.js',
             { pattern: 'tests/index.js', watched: false }
         ],
         preprocessors: {
