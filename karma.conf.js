@@ -1,11 +1,14 @@
+/* global process */
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 module.exports = function(config) {
     config.set({
-        browsers: ['PhantomJS', 'Chrome'],
+        browsers: ['ChromeHeadless'],
         frameworks: ['qunit'],
         files: [
-            'node_modules/intl/dist/Intl.min.js',
+            { pattern: 'tests/no-intl-mock.js', watched: false },
+            'node_modules/intl/dist/Intl.min.js',	
             'node_modules/intl/locale-data/complete.js',
-
             { pattern: 'tests/index.js', watched: false }
         ],
         preprocessors: {
@@ -15,7 +18,6 @@ module.exports = function(config) {
             'karma-webpack',
             'karma-qunit',
             'karma-junit-reporter',
-            'karma-phantomjs-launcher',
             'karma-chrome-launcher'
         ],
         reporters: [
