@@ -24,10 +24,6 @@ module.exports = function(config) {
             'dots',
             'junit'
         ],
-        junitReporter: {
-            outputDir: 'shippable/testresults/',
-            outputFile: 'test-results.xml'
-        },
         webpackMiddleware: {
             stats: 'errors-only'
         }
