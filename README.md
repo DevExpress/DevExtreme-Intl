@@ -1,4 +1,4 @@
-[![Run Status](https://api.shippable.com/projects/5819ee767d9db80f006078c2/badge?branch=master)](https://app.shippable.com/projects/5819ee767d9db80f006078c2)
+[![CircleCI](https://img.shields.io/circleci/project/github/DevExpress/DevExtreme-Intl/master.svg)](https://circleci.com/gh/DevExpress/devextreme-intl)
 
 # DevExtreme-Intl
 
