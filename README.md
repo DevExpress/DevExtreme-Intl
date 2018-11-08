@@ -13,13 +13,13 @@ Using *Intl* is an alternative to the *Globalize* based mechanism [documented he
 Add a script tag for `devextreme-intl` behind your tag for the `devextreme` script:
 
 ```html
-<script src="https://unpkg.com/devextreme-intl@18.1/dist/devextreme-intl.js"></script>
+<script src="https://unpkg.com/devextreme-intl@18.2/dist/devextreme-intl.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://unpkg.com/devextreme-intl@18.1/dist/devextreme-intl.min.js"></script>
+<script src="https://unpkg.com/devextreme-intl@18.2/dist/devextreme-intl.min.js"></script>
 ```
 
 See [this example with the relevant script tag in place](/examples/bundled.html).
