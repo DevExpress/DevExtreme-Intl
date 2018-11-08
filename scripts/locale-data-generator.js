@@ -31,4 +31,4 @@ var LOCALE_DATA_FOLDER = 'locale-data';
 try {
     fs.mkdirSync(LOCALE_DATA_FOLDER);
 } catch(e) { } // eslint-disable-line no-empty
-fs.writeFile(path.join(LOCALE_DATA_FOLDER, 'first-day-of-week-data.js'), 'module.exports = ' + JSON.stringify(result, null, '    ') + ';');
+fs.writeFileSync(path.join(LOCALE_DATA_FOLDER, 'first-day-of-week-data.js'), 'module.exports = ' + JSON.stringify(result, null, '    ') + ';');
