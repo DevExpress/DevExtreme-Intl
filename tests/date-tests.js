@@ -270,7 +270,7 @@ locales.forEach(function(localeId) {
             { format: 'longtime', date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 59, 59) },
         ];
 
-        if(compareVersions(dxVersion, '17.2.3') >= 0) {
+        if(compareVersions(dxVersion, '17.2.3') >= 0 && compareVersions(dxVersion, '18.2.4') !== 0) {
             Array.prototype.push.apply(testData, [
                 { format: 'longDate', date: new Date(2016, 10, 17) },
                 { format: 'longDate', date: new Date(2016, 11, 31) },
