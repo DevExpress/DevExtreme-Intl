@@ -1,7 +1,7 @@
 {
   "name": "devextreme-intl",
   "description": "Integrates ECMAScript Internationalization API with DevExtreme",
-  "version": "18.2.5",
+  "version": "18.2.6",
   "author": "Developer Express Inc.",
   "license": "MIT",
   "repository": {
