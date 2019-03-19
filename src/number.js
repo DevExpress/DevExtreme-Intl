@@ -7,8 +7,14 @@ var compareVersions = require('devextreme/core/utils/version').compare;
 
 var currencyOptionsCache = {},
     detectCurrencySymbolRegex = /([^\s0]+)?(\s*)0*[.,]*0*(\s*)([^\s0]+)?/,
+    formattersCache = {},
     getFormatter = function(format) {
-        return (new Intl.NumberFormat(locale(), format)).format;
+        var key = locale() + '/' + JSON.stringify(format);
+        if(!formattersCache[key]) {
+            formattersCache[key] = (new Intl.NumberFormat(locale(), format)).format;
+        }
+        
+        return formattersCache[key];
     },
     getCurrencyFormatter = function(currency) {
         return (new Intl.NumberFormat(locale(), { style: 'currency', currency: currency }));
