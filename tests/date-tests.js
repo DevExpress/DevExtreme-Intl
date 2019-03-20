@@ -247,6 +247,28 @@ locales.forEach(function(localeId) {
         assert.notOk(dateLocalization.format(), 'without date');
     });
 
+    QUnit.test('formatter caching', function(assert) {
+        var originalIntl = window.Intl;
+        var count = 0;
+        var IntlMock =  {
+            DateTimeFormat: function() {
+                count++;
+                this.format = function() {
+                    return '';
+                };
+            }
+        };
+
+        try {
+            window.Intl = IntlMock;
+            dateLocalization.format(new Date(), { day: 'numeric', uniqueField: true });
+            dateLocalization.format(new Date(), { day: 'numeric', uniqueField: true });
+            assert.equal(count, 1);
+        } finally {
+            window.Intl = originalIntl;
+        }
+    });
+
     QUnit.test('parse', function(assert) {
         var currentDate = new Date();
         var testData = [

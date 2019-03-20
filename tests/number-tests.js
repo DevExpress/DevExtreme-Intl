@@ -152,6 +152,28 @@ locales.forEach(function(localeId) {
         });
     });
 
+    QUnit.test('formatter caching', function(assert) {
+        var originalIntl = window.Intl;
+        var count = 0;
+        var IntlMock =  {
+            NumberFormat: function() {
+                count++;
+                this.format = function() {
+                    return '';
+                };
+            }
+        };
+
+        try {
+            window.Intl = IntlMock;
+            numberLocalization.format(1, { type: 'currency', precision: 42 });
+            numberLocalization.format(2, { type: 'currency', precision: 42 });
+            assert.equal(count, 1);
+        } finally {
+            window.Intl = originalIntl;
+        }
+    });
+
     QUnit.test('parse', function(assert) {
         assert.equal(numberLocalization.parse(getIntlFormatter({ maximumFractionDigits: 0, minimumFractionDigits: 0 })(437)), 437);
         assert.equal(numberLocalization.parse(getIntlFormatter({ maximumFractionDigits: 1, minimumFractionDigits: 1 })(1.2)), 1.2);
