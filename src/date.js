@@ -22,8 +22,18 @@ var getIntlFormatter = function(format) {
     };
 };
 
+var formattersCache = {};
+var getFormatter = function(format) {
+    var key = locale() + '/' + JSON.stringify(format);
+    if(!formattersCache[key]) {
+        formattersCache[key] = (new Intl.DateTimeFormat(locale(), format)).format;
+    }
+    
+    return formattersCache[key];
+};
+
 var formatDateTime = function(date, format) {
-    return (new Intl.DateTimeFormat(locale(), format)).format(date).replace(SYMBOLS_TO_REMOVE_REGEX, '');
+    return getFormatter(format)(date).replace(SYMBOLS_TO_REMOVE_REGEX, '');
 };
 
 var formatNumber = function(number) {
