@@ -250,7 +250,7 @@ locales.forEach(function(localeId) {
     QUnit.test('formatter caching', function(assert) {
         var originalIntl = window.Intl;
         var count = 0;
-        var IntlMock =  {
+        var IntlMock = {
             DateTimeFormat: function() {
                 count++;
                 this.format = function() {
