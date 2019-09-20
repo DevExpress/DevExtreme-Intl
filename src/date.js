@@ -132,7 +132,7 @@ var monthNameStrategies = {
         return monthNameStrategies.standalone(monthIndex, monthFormat);
     }
 };
-var intDatelLocalization = {
+var intlDateLocalization = {
     getMonthNames: function(format, type) {
         var intlFormats = {
             wide: 'long',
@@ -336,7 +336,7 @@ var intlIsActive = dateLocalization.engine && dateLocalization.engine() === 'int
 
 if(!intlIsEmbedded || !intlIsActive) {
     dateLocalization.resetInjection();
-    dateLocalization.inject(intDatelLocalization);
+    dateLocalization.inject(intlDateLocalization);
 
     if(intlIsEmbedded) {
         // eslint-disable-next-line no-console
