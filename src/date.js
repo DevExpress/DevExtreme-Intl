@@ -334,12 +334,12 @@ var intlDateLocalization = {
 var intlIsEmbedded = compareVersions(dxVersion, '19.2.1') > -1;
 var intlIsActive = dateLocalization.engine && dateLocalization.engine() === 'intl';
 
+if(intlIsEmbedded) {
+    // eslint-disable-next-line no-console
+    console.log('Since v19.2, Intl localization utilities are included in DevExtreme. Do not use the separate devextreme-intl module.');
+}
+
 if(!intlIsEmbedded || !intlIsActive) {
     dateLocalization.resetInjection();
     dateLocalization.inject(intlDateLocalization);
-
-    if(intlIsEmbedded) {
-        // eslint-disable-next-line no-console
-        console.log('Since v19.2, Intl localization utilities are included in DevExtreme. Do not use the separate devextreme-intl module.');
-    }
 }
