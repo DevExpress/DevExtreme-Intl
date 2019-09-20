@@ -193,12 +193,12 @@ var intlNumberLocalization = {
 var intlIsEmbedded = compareVersions(dxVersion, '19.2.1') > -1;
 var intlIsActive = numberLocalization.engine && numberLocalization.engine() === 'intl';
 
-if(!intlIsEmbedded || !intlIsActive) {    
-    if(intlIsEmbedded) {
-        // eslint-disable-next-line no-console
-        console.log('Since v19.2, Intl localization utilities are included in DevExtreme. Do not use the separate devextreme-intl module.');
-    }
+if(intlIsEmbedded) {
+    // eslint-disable-next-line no-console
+    console.log('Since v19.2, Intl localization utilities are included in DevExtreme. Do not use the separate devextreme-intl module.');
+}
 
+if(!intlIsEmbedded || !intlIsActive) {    
     numberLocalization.resetInjection();
     numberLocalization.inject(intlNumberLocalization);
 }
