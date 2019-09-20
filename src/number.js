@@ -20,8 +20,7 @@ var currencyOptionsCache = {},
         return (new Intl.NumberFormat(locale(), { style: 'currency', currency: currency }));
     };
 
-numberLocalization.resetInjection();
-numberLocalization.inject({
+var intlNumberLocalization = {
     _formatNumberCore: function(value, format, formatConfig) {
         if(format === 'exponential') {
             return this.callBase.apply(this, arguments);
@@ -189,4 +188,17 @@ numberLocalization.inject({
             options = this._getCurrencyOptions(currencyValue);
         return this._createOpenXmlCurrencyFormat(options);
     }
-});
+};
+
+var intlIsEmbedded = compareVersions(dxVersion, '19.2.1') > -1;
+var intlIsActive = numberLocalization.engine && numberLocalization.engine() === 'intl';
+
+if(!intlIsEmbedded || !intlIsActive) {    
+    if(intlIsEmbedded) {
+        // eslint-disable-next-line no-console
+        console.log('Since v19.2, Intl localization utilities are included in DevExtreme. Do not use the separate devextreme-intl module.');
+    }
+
+    numberLocalization.resetInjection();
+    numberLocalization.inject(intlNumberLocalization);
+}
