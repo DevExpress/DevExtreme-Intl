@@ -340,6 +340,6 @@ if(!intlIsEmbedded || !intlIsActive) {
 
     if(intlIsEmbedded) {
         // eslint-disable-next-line no-console
-        console.log('Since DevExtrme 19.2 the `devextreme-intl` is redundant. Please do not use it.');
+        console.log('Since v19.2, Intl localization utilities are included in DevExtreme. Do not use the separate devextreme-intl module.');
     }
 }
