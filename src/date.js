@@ -132,9 +132,7 @@ var monthNameStrategies = {
         return monthNameStrategies.standalone(monthIndex, monthFormat);
     }
 };
-
-dateLocalization.resetInjection();
-dateLocalization.inject({
+var intDatelLocalization = {
     getMonthNames: function(format, type) {
         var intlFormats = {
             wide: 'long',
@@ -331,4 +329,17 @@ dateLocalization.inject({
 
         return index === undefined ? 1 : index;
     }
-});
+};
+
+var intlIsEmbedded = compareVersions(dxVersion, '19.2.1') > -1;
+var intlIsActive = dateLocalization.engine && dateLocalization.engine() === 'intl';
+
+if(!intlIsEmbedded || !intlIsActive) {
+    dateLocalization.resetInjection();
+    dateLocalization.inject(intDatelLocalization);
+
+    if(intlIsEmbedded) {
+        // eslint-disable-next-line no-console
+        console.log('Since DevExtrme 19.2 the `devextreme-intl` is redundant. Please do not use it.');
+    }
+}
