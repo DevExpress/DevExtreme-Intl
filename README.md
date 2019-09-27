@@ -2,6 +2,8 @@
 
 # DevExtreme-Intl
 
+**IMPORTANT**: This repo is in maintenance mode. Since v19.2, DevExtreme provides localization via Intl API out of the box, and this module is redundant. We do not recommend using it any longer.
+
 This integration module enables localization of [DevExtreme](http://js.devexpress.com/) widgets using the global [Intl](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Intl) object of the  ECMAScript Internationalization API.
 
 Using *Intl* is an alternative to the *Globalize* based mechanism [documented here](https://js.devexpress.com/Documentation/Guide/Widgets/Common/UI_Widgets/Localization_-_Use_Globalize/). Please note that in comparison to *Globalize*, there are some restrictions which are described in [the section *Restrictions*](#restrictions) below.
