@@ -1,8 +1,11 @@
+/* global DevExpress */
+
 var displayed = false;
 
 function isAspNetCompatMode() {
-    var globalDevExpress = window.DevExpress;
-    return Boolean(globalDevExpress && globalDevExpress.aspnet && window.Globalize);
+    return typeof Globalize !== 'undefined'
+        && typeof DevExpress === 'object'
+        && 'aspnet' in DevExpress;
 }
 
 module.exports = function() {
