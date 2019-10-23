@@ -4,6 +4,7 @@ var locale = require('devextreme/localization').locale;
 var numberLocalization = require('devextreme/localization').number;
 var dxVersion = require('devextreme/core/version');
 var compareVersions = require('devextreme/core/utils/version').compare;
+var deprecationWarning = require('./deprecation-warning');
 
 var currencyOptionsCache = {},
     detectCurrencySymbolRegex = /([^\s0]+)?(\s*)0*[.,]*0*(\s*)([^\s0]+)?/,
@@ -194,8 +195,7 @@ var intlIsEmbedded = compareVersions(dxVersion, '19.2.1') > -1;
 var intlIsActive = numberLocalization.engine && numberLocalization.engine() === 'intl';
 
 if(intlIsEmbedded) {
-    // eslint-disable-next-line no-console
-    console.log('Since v19.2, Intl localization utilities are included in DevExtreme. Do not use the separate devextreme-intl module.');
+    deprecationWarning();
 }
 
 if(!intlIsEmbedded || !intlIsActive) {    
