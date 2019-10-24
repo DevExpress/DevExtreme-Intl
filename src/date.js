@@ -4,6 +4,7 @@ var dateLocalization = require('devextreme/localization').date;
 var firstDayOfWeekData = require('../locale-data/first-day-of-week-data');
 var dxVersion = require('devextreme/core/version');
 var compareVersions = require('devextreme/core/utils/version').compare;
+var deprecationWarning = require('./deprecation-warning');
 
 var SYMBOLS_TO_REMOVE_REGEX = /[\u200E\u200F]/g;
 
@@ -335,8 +336,7 @@ var intlIsEmbedded = compareVersions(dxVersion, '19.2.1') > -1;
 var intlIsActive = dateLocalization.engine && dateLocalization.engine() === 'intl';
 
 if(intlIsEmbedded) {
-    // eslint-disable-next-line no-console
-    console.log('Since v19.2, Intl localization utilities are included in DevExtreme. Do not use the separate devextreme-intl module.');
+    deprecationWarning();
 }
 
 if(!intlIsEmbedded || !intlIsActive) {
