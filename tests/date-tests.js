@@ -390,7 +390,7 @@ locales.forEach(function(localeId) {
 
     QUnit.test('firstDayOfWeekIndex', function(assert) {
         var expectedValues = {
-            de: 1, en: 0, ja: 0, ru: 1, zh: 0, hr: 1, ar: 6, el: 1, ca: 1
+            de: 1, en: 0, ja: 0, ru: 1, zh: 1, hr: 1, ar: 6, el: 1, ca: 1
         };
         assert.equal(dateLocalization.firstDayOfWeekIndex(), expectedValues[localeId]);
     });
